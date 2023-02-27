@@ -15,7 +15,7 @@
         "@fortawesome/free-solid-svg-icons": "6.2.0",
         "@fortawesome/vue-fontawesome": "3.0.0-4",
         "@profabric/vue-components": "0.1.2",
-        "axios": "0.27.2",
+        "axios": "^0.27.2",
         "gatekeeper-client-sdk": "0.4.2",
         "luxon": "3.0.3",
         "summernote": "./summernote",
@@ -54,6 +54,8 @@
         "node-sass": "7.0.3",
         "prettier": "2.7.1",
         "sass-loader": "13.0.2",
+        "ts-node": "^10.9.1",
+        "tsconfig-paths": "^3.14.2",
         "typescript": "~4.8.3",
         "vue-jest": "3.0.7"
     }

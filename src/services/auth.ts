@@ -1,13 +1,31 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {Gatekeeper} from 'gatekeeper-client-sdk';
-
+import {ApiManager} from './ApiManager';
 const getError = (error: any) => {
     const message = error.message || 'Failed';
     return new Error(message);
 };
 
 export const loginByAuth = async (email: string, password: string) => {
+    //old code. we will now use other shit
+    // axios.post(BaseUrl+"", {}, {
+    //       auth: {
+    //             username: userName,
+    //             password: password
+    //       }
+    // }).then(function(response) {
+    //       console.log('Authenticated');
+    // }).catch(function(error) {
+    // console.log('Error on Authentication');
+    // });
     try {
+        const data = {
+            Email: email,
+            Password: password
+        };
+        const formData = new FormData();
+        const response = ApiManager.post('Admin/GetAccount', formData, data);
+
         const token = await Gatekeeper.loginByAuth(email, password);
         return token;
     } catch (error: any) {

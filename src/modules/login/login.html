@@ -1,11 +1,19 @@
 <div class="login-box">
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
+        <pf-image 
+        :src="require('@/assets/img/MyPuckLogo.png')"
+        alt="AdminLTE Logo"
+        class="login-image"
+        rounded
+        height="150"
+        width="150"
+        style="opacity: 0.8">
+        </pf-image>
         <div class="card-header text-center">
-            <router-link to="/" class="h1"
-                ><b>{{ $t("labels.admin") }}</b>{{ $t("labels.lte")
-                }}</router-link
-            >
+            <router-link to="/" class="h1">
+                <b>{{ $t("labels.admin") }}</b>{{ $t("labels.lte")}}
+            </router-link>
         </div>
         <div class="card-body">
             <p class="login-box-msg">{{ $t("labels.signInToStart") }}</p>
@@ -35,7 +43,7 @@
                         </pf-checkbox>
                     </div>
                     <!-- /.col -->
-                    <div class="col-5">
+                    <div class="col-12">
                         <pf-button
                             type="submit"
                             block="true"
@@ -49,7 +57,7 @@
                 </div>
             </form>
 
-            <div class="social-auth-links text-center mt-2 mb-3">
+            <!-- <div class="social-auth-links text-center mt-2 mb-3">
                 <pf-button
                     class="mb-2"
                     block="true"
@@ -64,13 +72,13 @@
                     block="true"
                     theme="danger"
                     @click="loginByGoogle"
-                    :loading="isGoogleLoading"
+                    :loading="SignInUsingGoogle"
                     :disabled="isAuthLoading || isFacebookLoading"
                 >
                     <i class="fab fa-google mr-2"></i>
                     <span>{{ $t("labels.SignInUsingGoogle") }}</span>
                 </pf-button>
-            </div>
+            </div> -->
             <!-- /.social-auth-links -->
 
             <p class="mb-1">

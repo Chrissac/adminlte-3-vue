@@ -26,6 +26,6 @@
         "src/**/*.vue",
         "tests/**/*.ts",
         "tests/**/*.tsx"
-    ],
+, "src/services/ApiManager.js", "src/services/ApiManager.js"    ],
     "exclude": ["node_modules"]
 }
