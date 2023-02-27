@@ -13,7 +13,7 @@ axios.interceptors.response.use(
 axios.interceptors.request.use(
     async (config) => {
         // token = await getToken()
-        config.headers.Authorization = `Basic TXlQdWNrQXBpOlJhbmFNdWhhbW1hZFRlc3RLZXkqJQ==`;
+        config.headers.Authorization = 'Basic TXlQdWNrQXBpOlJhbmFNdWhhbW1hZFRlc3RLZXkqJQ==';
         return config;
     },
     (error) => {
