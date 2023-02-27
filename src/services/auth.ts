@@ -24,7 +24,7 @@ export const loginByAuth = async (email: string, password: string) => {
             Password: password
         };
         const formData = new FormData();
-        const response = await ApiManager.post('Admin/GetUserAdminAccount', {Email:email,Password:password});
+        const response = await ApiManager.post('Admin/GetUserAdminAccount', data);
 
         const token = await Gatekeeper.loginByAuth(email, password);
         return token;
