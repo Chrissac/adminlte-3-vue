@@ -21,9 +21,9 @@ export default class User extends Vue {
 
     get readableCreatedAtDate() {
         if (this.user) {
-            return DateTime.fromISO(this.user.createdAt).toFormat(
-                'dd LLLL yyyy'
-            );
+            return DateTime.fromISO(
+                this.user.approvalDate?.toString()
+            ).toFormat('dd LLLL yyyy');
         }
         return '';
     }

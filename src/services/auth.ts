@@ -23,11 +23,12 @@ export const loginByAuth = async (email: string, password: string) => {
             Email: email,
             Password: password
         };
-        const formData = new FormData();
-        const response = await ApiManager.post('Admin/GetUserAdminAccount', data);
-
-        const token = await Gatekeeper.loginByAuth(email, password);
-        return token;
+        const response = await ApiManager.post(
+            'Admin/GetUserAdminAccount',
+            data
+        );
+        // const response = await Gatekeeper.loginByAuth(email, password);
+        return response;
     } catch (error: any) {
         throw getError(error);
     }
