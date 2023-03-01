@@ -31,19 +31,19 @@ export const MENU = [
         path: '/'
     },
     {
-        name: i18n.global.t('labels.blank'),
+        name: i18n.global.t('labels.users'),
         path: '/blank'
     },
     {
-        name: i18n.global.t('labels.mainMenu'),
+        name: i18n.global.t('labels.games'),
         children: [
             {
-                name: i18n.global.t('labels.subMenu'),
+                name: i18n.global.t('labels.activeGames'),
                 path: '/sub-menu-1'
             },
 
             {
-                name: i18n.global.t('labels.blank'),
+                name: i18n.global.t('labels.previousGames'),
                 path: '/sub-menu-2'
             }
         ]
