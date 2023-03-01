@@ -4,7 +4,7 @@
         :class="{'active': isMainActive || isOneOfChildrenActive}"
         @click="handleMainMenuAction"
     >
-        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <i :class="$t(menuItem.icon)" ></i>
         <p>{{ $t(menuItem.name) }}</p>
         <i v-if="isExpandable" class="right fas fa-angle-left"></i>
     </a>
@@ -16,7 +16,7 @@
                 exact
                 exact-active-class="active"
             >
-                <i class="far fa-circle nav-icon"></i>
+                <i :class="$t(item.icon)"></i>
                 <p>{{ $t(item.name) }}</p>
             </router-link>
         </li>

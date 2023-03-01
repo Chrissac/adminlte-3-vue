@@ -34,12 +34,13 @@ export default class Login extends Vue {
     public async loginByAuth(): Promise<void> {
         try {
             this.isAuthLoading = true;
-            const responseData = (await loginByAuth(this.email, this.password)).data;
-            if(responseData.isSuccessfulResponse){
+            const responseData = (await loginByAuth(this.email, this.password))
+                .data;
+            if (responseData.isSuccessfulResponse) {
                 this.$store.dispatch('auth/login', responseData.id);
                 this.$store.dispatch('auth/getUser', responseData);
                 this.toast.success('Login succeeded');
-            }else{
+            } else {
                 this.toast.error(responseData.descriptionResponse);
             }
             this.isAuthLoading = false;

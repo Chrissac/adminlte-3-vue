@@ -12,7 +12,7 @@ import RecoverPassword from '@/modules/recover-password/recover-password.vue';
 import PrivacyPolicy from '@/modules/privacy-policy/privacy-policy.vue';
 import SubMenu from '@/pages/main-menu/sub-menu/sub-menu.vue';
 import Blank from '@/pages/blank/blank.vue';
-
+import Users from '@/pages/users/users';
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -26,6 +26,14 @@ const routes: Array<RouteRecordRaw> = [
                 path: 'profile',
                 name: 'Profile',
                 component: Profile,
+                meta: {
+                    requiresAuth: true
+                }
+            },
+            {
+                path: 'users',
+                name: 'users',
+                component: Users,
                 meta: {
                     requiresAuth: true
                 }
