@@ -12,7 +12,7 @@ import RecoverPassword from '@/modules/recover-password/recover-password.vue';
 import PrivacyPolicy from '@/modules/privacy-policy/privacy-policy.vue';
 import SubMenu from '@/pages/main-menu/sub-menu/sub-menu.vue';
 import Blank from '@/pages/blank/blank.vue';
-import Users from '@/pages/users/users';
+import Users from '@/pages/users/users.vue';
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -117,6 +117,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    const token = store.getters['auth/token'];
     if (to.meta.requiresAuth && !store.getters['auth/token']) {
         next('/login');
     } else if (to.meta.requiresUnauth && !!store.getters['auth/token']) {
@@ -125,5 +126,29 @@ router.beforeEach((to, from, next) => {
         next();
     }
 });
+
+
+// router.beforeEach((to, from, next) => {
+//     // Check if the route requires authentication
+//     if (to.meta.requiresAuth) {
+//       // Check if the session token is present and has not expired
+//       const sessionCookie = document.cookie.split('; ').find(cookie => cookie.startsWith('session_token='));
+//       if (sessionCookie) {
+//         const cookieValue = sessionCookie.split('=')[1];
+//         const [sessionToken, expirationTime] = cookieValue.split('|');
+//         if (new Date() < new Date(expirationTime)) {
+//           // The session token is valid, set it in the Vuex store and proceed to the route
+//           store.commit('auth/setToken', sessionToken);
+//           next();
+//           return;
+//         }
+//       }
+//       // The session token is not valid, redirect to the login page
+//       next('/login');
+//     } else {
+//       // The route does not require authentication, proceed to the route
+//       next();
+//     }
+//   });
 
 export default router;

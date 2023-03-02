@@ -37,6 +37,10 @@ export default class Login extends Vue {
             const responseData = (await loginByAuth(this.email, this.password))
                 .data;
             if (responseData.isSuccessfulResponse) {
+                const expirationTime = new Date(Date.now() + 3600000).toUTCString(); // Expires in 1 hour
+                const cookieValue = `${responseData.id}|${expirationTime}`;
+                document.cookie = `session_token=${cookieValue}; expires=${expirationTime}; path=/`;
+                // this.$store.dispatch('auth/token', responseData.id);
                 this.$store.dispatch('auth/login', responseData.id);
                 this.$store.dispatch('auth/getUser', responseData);
                 this.toast.success('Login succeeded');
