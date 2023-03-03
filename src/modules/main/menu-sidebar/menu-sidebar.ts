@@ -17,7 +17,8 @@ export default class MenuSidebar extends Vue {
     public menu = MENU;
 
     get user(): IUser {
-        return this.$store.getters['auth/user'];
+        const user = JSON.parse(localStorage.getItem("auth_user"));
+        return user;
     }
 
     get sidebarSkin() {

@@ -4,7 +4,7 @@ import {loginByAuth} from '@/services/auth';
 import Input from '@/components/input/input.vue';
 import {useToast} from 'vue-toastification';
 import {PfButton, PfCheckbox} from '@profabric/vue-components';
-
+import { IUser } from '@/interfaces/user';
 @Options({
     components: {
         'app-input': Input,
@@ -41,8 +41,13 @@ export default class Login extends Vue {
                 const cookieValue = `${responseData.id}|${expirationTime}`;
                 document.cookie = `session_token=${cookieValue}; expires=${expirationTime}; path=/`;
                 // this.$store.dispatch('auth/token', responseData.id);
+                localStorage.setItem('user_token',responseData.id);
+                localStorage.setItem("auth_user", JSON.stringify(responseData));
+
                 this.$store.dispatch('auth/login', responseData.id);
                 this.$store.dispatch('auth/getUser', responseData);
+                this.$store.dispatch('auth/user', responseData);
+
                 this.toast.success('Login succeeded');
             } else {
                 this.toast.error(responseData.descriptionResponse);

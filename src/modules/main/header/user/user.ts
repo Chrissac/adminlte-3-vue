@@ -12,7 +12,8 @@ import {PfDropdown, PfImage} from '@profabric/vue-components';
 })
 export default class User extends Vue {
     get user(): IUser {
-        return this.$store.getters['auth/user'];
+        const user = JSON.parse(localStorage.getItem("auth_user"));
+        return user;
     }
 
     private logout() {
