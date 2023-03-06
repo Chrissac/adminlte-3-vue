@@ -8,11 +8,5 @@ export default {
     },
     getUser: (context: any, payload: IUser): void => {
         context.commit('setUser', payload);
-    },
-    logout: (context: any): void => {
-        context.commit('setToken', null);
-        context.commit('setUser', null);
-        localStorage.removeItem('user_token');
-        router.replace('/login');
     }
 };

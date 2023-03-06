@@ -13,6 +13,7 @@ import PrivacyPolicy from '@/modules/privacy-policy/privacy-policy.vue';
 import SubMenu from '@/pages/main-menu/sub-menu/sub-menu.vue';
 import Blank from '@/pages/blank/blank.vue';
 import Users from '@/pages/users/users.vue';
+import actions from '@/store/auth/actions';
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -117,15 +118,47 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem('user_token');
 
-    if (to.meta.requiresAuth && !store.getters['auth/token']) {
+    if (to.meta.requiresAuth) {
+        // Check if the session token is present and has not expired
+        const sessionCookie = document.cookie.split('; ').find(cookie => cookie.startsWith('session_token='));
+        if (sessionCookie) {
+          const cookieValue = sessionCookie.split('=')[1];
+          const [sessionToken, expirationTime] = cookieValue.split('|');
+          if (new Date() < new Date(expirationTime) && localStorage.getItem("auth_user") != null) {
+            const expirationTime = new Date(Date.now() + 3600000).toUTCString(); // Expires in 1 hour
+            const cookieValue = `${sessionToken}|${expirationTime}`;
+            document.cookie = `session_token=${cookieValue}; expires=${expirationTime}; path=/`;
+            next();
+            return;
+          }else{
+            localStorage.removeItem('user_token');
+            localStorage.removeItem('auth_user');
+            store.commit('auth/login', null);
+            store.commit('auth/getUser', null);
+            store.commit('auth/user', null);
+            document.cookie =``;
+            next('/login');
+          }
+        }
         next('/login');
-    } else if (to.meta.requiresUnauth && !!store.getters['auth/token']) {
-        next('/');
-    } else {
+      } else {
+        // The route does not require authentication, proceed to the route
         next();
-    }
+      }
+
+
+
+
+    // const token = localStorage.getItem('user_token');
+
+    // if (to.meta.requiresAuth && !store.getters['auth/token']) {
+    //     next('/login');
+    // } else if (to.meta.requiresUnauth && !!store.getters['auth/token']) {
+    //     next('/');
+    // } else {
+    //     next();
+    // }
 });
 
 

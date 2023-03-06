@@ -2,6 +2,7 @@ import {IUser} from '@/interfaces/user';
 import {Options, Vue} from 'vue-class-component';
 import {DateTime} from 'luxon';
 import {PfDropdown, PfImage} from '@profabric/vue-components';
+import router from '@/router';
 
 @Options({
     name: 'user-dropdown',
@@ -17,7 +18,8 @@ export default class User extends Vue {
     }
 
     private logout() {
-        this.$store.dispatch('auth/logout');
+        localStorage.removeItem("auth_user");
+        router.replace('/login');
     }
 
     get readableCreatedAtDate() {

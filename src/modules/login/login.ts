@@ -5,6 +5,7 @@ import Input from '@/components/input/input.vue';
 import {useToast} from 'vue-toastification';
 import {PfButton, PfCheckbox} from '@profabric/vue-components';
 import { IUser } from '@/interfaces/user';
+import router from '@/router';
 @Options({
     components: {
         'app-input': Input,
@@ -49,6 +50,7 @@ export default class Login extends Vue {
                 this.$store.dispatch('auth/user', responseData);
 
                 this.toast.success('Login succeeded');
+                router.replace('/');
             } else {
                 this.toast.error(responseData.descriptionResponse);
             }
