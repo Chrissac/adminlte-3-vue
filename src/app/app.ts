@@ -1,7 +1,6 @@
 import {calculateWindowSize} from '@/utils/helpers';
 import {Options, Vue} from 'vue-class-component';
 import actions from '@/store/auth/actions';
-import router from '@/router/index';
 @Options({
     watch: {
         currentWindowSize: (value) => {
@@ -10,9 +9,8 @@ import router from '@/router/index';
     },
     components: {
         actions
-       },
+    }
 })
-
 export default class App extends Vue {
     // created() {
     //     // Check if the session token is present and has not expired
@@ -23,7 +21,7 @@ export default class App extends Vue {
     //       if (new Date() < new Date(expirationTime)) {
     //         // The session token is valid, set it in the Vuex store
     //         this.$store.dispatch('auth/token', sessionToken);
-            
+
     //       }else{
     //         localStorage.removeItem('user_token');
     //         localStorage.removeItem('auth_user');

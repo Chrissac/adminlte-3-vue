@@ -13,12 +13,12 @@ import router from '@/router';
 })
 export default class User extends Vue {
     get user(): IUser {
-        const user = JSON.parse(localStorage.getItem("auth_user"));
+        const user = JSON.parse(localStorage.getItem('auth_user'));
         return user;
     }
 
     private logout() {
-        localStorage.removeItem("auth_user");
+        localStorage.removeItem('auth_user');
         router.replace('/login');
     }
 

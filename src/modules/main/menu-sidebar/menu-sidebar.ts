@@ -17,12 +17,16 @@ export default class MenuSidebar extends Vue {
     public menu = MENU;
 
     get user(): IUser {
-        const user = JSON.parse(localStorage.getItem("auth_user"));
+        const user = JSON.parse(localStorage.getItem('auth_user'));
         return user;
     }
 
     get sidebarSkin() {
         return this.$store.getters['ui/sidebarSkin'];
+    }
+
+    public onToggleMenuSidebar(): void {
+        this.$store.dispatch('ui/toggleMenuSidebar');
     }
 }
 

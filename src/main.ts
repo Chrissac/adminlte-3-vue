@@ -3,12 +3,13 @@ import App from './app/app.vue';
 import router from './router';
 import store from './store';
 import {i18n} from './translation';
-
+import DataTable from 'datatables.net-vue3'
+import DataTablesLib from 'datatables.net';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import Toast, {PluginOptions} from 'vue-toastification';
 import {VueWindowSizePlugin} from 'vue-window-size/option-api';
-import {ProfabricComponents} from '@profabric/vue-components';
 
+import {ProfabricComponents} from '@profabric/vue-components';
 import './index.scss';
 const options: PluginOptions = {
     timeout: 5000,
@@ -31,6 +32,7 @@ const options: PluginOptions = {
 };
 
 createApp(App)
+    .component('DataTable', DataTable.use(DataTablesLib))
     .component('font-awesome-icon', FontAwesomeIcon)
     .use(store)
     .use(router)
@@ -39,3 +41,4 @@ createApp(App)
     .use(i18n as any)
     .use(ProfabricComponents)
     .mount('#app');
+    

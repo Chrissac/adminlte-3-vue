@@ -1,5 +1,5 @@
 <aside v-if="menu" class="main-sidebar elevation-4" :class="sidebarSkin">
-    <router-link to="/" class="brand-link">
+    <div class="brand-link">
         <pf-image
             :src="require('@/assets/img/MyPuckLogo.png')"
             alt="AdminLTE Logo"
@@ -7,10 +7,11 @@
             height="33"
             width="33"
             rounded
+            @click="onToggleMenuSidebar"
             style="opacity: 0.8"
         ></pf-image>
         <span class="brand-text font-weight-light"><b>{{ $t("labels.admin") }}</b>{{ $t("labels.lte")}}</span>
-    </router-link>
+    </div>
 
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">

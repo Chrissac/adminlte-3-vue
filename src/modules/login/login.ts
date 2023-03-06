@@ -4,7 +4,7 @@ import {loginByAuth} from '@/services/auth';
 import Input from '@/components/input/input.vue';
 import {useToast} from 'vue-toastification';
 import {PfButton, PfCheckbox} from '@profabric/vue-components';
-import { IUser } from '@/interfaces/user';
+import {IUser} from '@/interfaces/user';
 import router from '@/router';
 @Options({
     components: {
@@ -38,12 +38,14 @@ export default class Login extends Vue {
             const responseData = (await loginByAuth(this.email, this.password))
                 .data;
             if (responseData.isSuccessfulResponse) {
-                const expirationTime = new Date(Date.now() + 3600000).toUTCString(); // Expires in 1 hour
+                const expirationTime = new Date(
+                    Date.now() + 3600000
+                ).toUTCString(); // Expires in 1 hour
                 const cookieValue = `${responseData.id}|${expirationTime}`;
                 document.cookie = `session_token=${cookieValue}; expires=${expirationTime}; path=/`;
                 // this.$store.dispatch('auth/token', responseData.id);
-                localStorage.setItem('user_token',responseData.id);
-                localStorage.setItem("auth_user", JSON.stringify(responseData));
+                localStorage.setItem('user_token', responseData.id);
+                localStorage.setItem('auth_user', JSON.stringify(responseData));
 
                 this.$store.dispatch('auth/login', responseData.id);
                 this.$store.dispatch('auth/getUser', responseData);
