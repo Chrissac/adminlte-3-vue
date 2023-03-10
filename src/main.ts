@@ -1,24 +1,25 @@
-import {createApp} from 'vue';
+import {createApp,VueElement} from 'vue';
 import App from './app/app.vue';
 import router from './router';
 import store from './store';
 import {i18n} from './translation';
-import DataTable from 'datatables.net-vue3'
-import DataTablesLib from 'datatables.net';
+import DataTable from 'datatables.net-vue3';
+import DataTablesCore from 'datatables.net-bs5';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import Toast, {PluginOptions} from 'vue-toastification';
 import {VueWindowSizePlugin} from 'vue-window-size/option-api';
 
 import {ProfabricComponents} from '@profabric/vue-components';
 import './index.scss';
+
 const options: PluginOptions = {
     timeout: 5000,
     closeOnClick: true,
     pauseOnFocusLoss: true,
-    pauseOnHover: true,
+    pauseOnHover: false,
     draggable: true,
     draggablePercent: 0.6,
-    showCloseButtonOnHover: false,
+    showCloseButtonOnHover: true,
     hideProgressBar: false,
     closeButton: 'button',
     icon: true,
@@ -31,8 +32,11 @@ const options: PluginOptions = {
     }
 };
 
+// Vue.component('dataTables', DataTablesLib);
+DataTable.use(DataTablesCore);
+
 createApp(App)
-    .component('DataTable', DataTable.use(DataTablesLib))
+    .component('DataTable', DataTable)
     .component('font-awesome-icon', FontAwesomeIcon)
     .use(store)
     .use(router)
@@ -40,5 +44,5 @@ createApp(App)
     .use(Toast, options)
     .use(i18n as any)
     .use(ProfabricComponents)
-    .mount('#app');
     
+    .mount('#app');

@@ -1,0 +1,12 @@
+<div
+v-if="isLoading"
+:class="{
+  'loading-overlay--semi-transparent': semiTransparent,
+  'loading-overlay--fixed': fixed,
+  'loading-overlay--fixed-fullscreen': fixedFullscreen,
+}"
+class="loading-overlay"
+>
+<b-spinner class="loading-spinner" :class="spinnerClass"></b-spinner>
+<div v-if="message" v-html="message" class="loading-message"></div>
+</div>

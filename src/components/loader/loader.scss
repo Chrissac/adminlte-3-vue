@@ -1,0 +1,55 @@
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 300;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 1);
+  
+    .loading-spinner {
+      color: #149eb1;
+    }
+  
+    .loading-message {
+      margin-top: 1.25rem * 0.75;
+      font-size: rem(12px);
+      line-height: 1.75;
+      letter-spacing: rem(0.2px);
+      text-align: center;
+      color: #149eb1;
+    }
+  
+    &--semi-transparent {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+    &--fixed,
+    &--fixed-fullscreen {
+      position: fixed;
+      width: unset;
+      height: unset;
+      right: 0;
+      bottom: 0;
+    }
+  }
+  
+  #app .loading-overlay--fixed {
+    left: 4rem;
+    transition: left 0.1s ease;
+  }
+//   @mixin minSize($size) {
+//     @media screen and (min-width: #{$size}) {
+//       @content;
+//     }
+//   }
+//   @include minSize(1200px) {
+//     #app.nav-menu-is-open .loading-overlay--fixed {
+//       left: 15rem;
+//     }
+//   }
+
+  
