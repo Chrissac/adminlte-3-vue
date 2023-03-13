@@ -1,7 +1,7 @@
-import {IUser} from './user';
+import {IAdminUser} from './aminUser';
 export interface IAuthState {
     token: string;
-    user: IUser;
+    user: IAdminUser;
 }
 
 export interface IAuthModule {

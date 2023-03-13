@@ -1,4 +1,4 @@
-export interface IUser extends ResponseStatus {
+export interface IAdminUser extends ResponseStatus {
     id: string;
     firstName: string;
     lastName: string;

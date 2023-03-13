@@ -1,5 +1,5 @@
-import {IUser} from './user';
+import {IAdminUser} from './aminUser';
 export interface IPayload {
     token: string;
-    user: IUser;
+    user: IAdminUser;
 }

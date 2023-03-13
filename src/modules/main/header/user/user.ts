@@ -1,4 +1,4 @@
-import {IUser} from '@/interfaces/user';
+import {IAdminUser} from '@/interfaces/aminUser';
 import {Options, Vue} from 'vue-class-component';
 import {DateTime} from 'luxon';
 import {PfDropdown, PfImage} from '@profabric/vue-components';
@@ -12,7 +12,7 @@ import router from '@/router';
     }
 })
 export default class User extends Vue {
-    get user(): IUser {
+    get user(): IAdminUser {
         const user = JSON.parse(localStorage.getItem('auth_user'));
         return user;
     }

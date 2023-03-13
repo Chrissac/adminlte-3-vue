@@ -1,4 +1,4 @@
-import {IUser} from '@/interfaces/user';
+import {IAdminUser} from '@/interfaces/aminUser';
 import {Options, Vue} from 'vue-class-component';
 import MenuItem from '@/components/menu-item/menu-item.vue';
 import {PfImage} from '@profabric/vue-components';
@@ -16,7 +16,7 @@ import {i18n} from '@/translation';
 export default class MenuSidebar extends Vue {
     public menu = MENU;
 
-    get user(): IUser {
+    get user(): IAdminUser {
         const user = JSON.parse(localStorage.getItem('auth_user'));
         return user;
     }

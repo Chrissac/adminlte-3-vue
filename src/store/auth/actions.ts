@@ -1,4 +1,4 @@
-import {IUser} from '@/interfaces/user';
+import {IAdminUser} from '@/interfaces/aminUser';
 import router from '@/router/index';
 
 export default {
@@ -6,7 +6,7 @@ export default {
         context.commit('setToken', payload);
         router.replace('/');
     },
-    getUser: (context: any, payload: IUser): void => {
+    getUser: (context: any, payload: IAdminUser): void => {
         context.commit('setUser', payload);
     }
 };

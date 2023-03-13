@@ -1,11 +1,11 @@
 import {IAuthState} from '@/interfaces/state';
-import {IUser} from '@/interfaces/user';
+import {IAdminUser} from '@/interfaces/aminUser';
 
 export default {
     setToken: (state: IAuthState, payload: string): void => {
         state.token = payload;
     },
-    setUser: (state: IAuthState, payload: IUser): void => {
+    setUser: (state: IAuthState, payload: IAdminUser): void => {
         state.user = payload;
     }
 };

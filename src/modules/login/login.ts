@@ -4,7 +4,6 @@ import {loginByAuth} from '@/services/auth';
 import Input from '@/components/input/input.vue';
 import {useToast} from 'vue-toastification';
 import {PfButton, PfCheckbox} from '@profabric/vue-components';
-import {IUser} from '@/interfaces/user';
 import router from '@/router';
 @Options({
     components: {

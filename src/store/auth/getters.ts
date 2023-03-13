@@ -1,7 +1,7 @@
 import {IAuthState} from '@/interfaces/state';
-import {IUser} from '@/interfaces/user';
+import {IAdminUser} from '@/interfaces/aminUser';
 
 export default {
-    user: (state: IAuthState): IUser => state.user,
+    user: (state: IAuthState): IAdminUser => state.user,
     token: (state: IAuthState): string => state.token
 };

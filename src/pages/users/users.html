@@ -22,14 +22,22 @@
             <div class="card-body">
                 <v-container>
                     <DataTable
-                      class="display"
-                      :data="state.tableData"
-                      :options="{ select: true }"
+                      class="table table-hover table-striped"
+                      :data="data"
                       :columns="columns"
+                      :rowCallback="rowCallback"
+                      :options="{
+                        paging: true,
+                        searching: true,
+                        select: true,
+                        editable: true,
+                        scrollX:true
+                      }"
                       ref="table"
                       width="100%"
                     >
                     </DataTable>
+                    
                   </v-container>
             </div>
             <!-- /.card-body -->
@@ -38,4 +46,4 @@
     </div>
     <!-- /.card -->
 </section>
-<!-- /.content -->
+<!-- /.content -->  
