@@ -1,1 +1,5 @@
 @import '../../../node_modules/primevue/resources/primevue.min.css';
+::v-deep(.editable-cells-table td.p-cell-editing) {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+}

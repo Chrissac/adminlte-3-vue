@@ -1,20 +1,19 @@
-
-import "primevue/resources/themes/lara-light-blue/theme.css";
-import "primevue/resources/primevue.min.css";
-import "primeicons/primeicons.css";
+import 'primevue/resources/themes/lara-light-blue/theme.css';
+import 'primevue/resources/primevue.min.css';
+import 'primeicons/primeicons.css';
 import store from './store';
 import router from './router';
 import {i18n} from './translation';
-import { createApp } from "vue";
-import App from "./app/app.vue";
-import PrimeVue from "primevue/config";
+import {createApp} from 'vue';
+import App from './app/app.vue';
+import PrimeVue from 'primevue/config';
 import AutoComplete from 'primevue/autocomplete';
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 import Avatar from 'primevue/avatar';
 import AvatarGroup from 'primevue/avatargroup';
 import Badge from 'primevue/badge';
-import BadgeDirective from "primevue/badgedirective";
+import BadgeDirective from 'primevue/badgedirective';
 import BlockUI from 'primevue/blockui';
 import Breadcrumb from 'primevue/breadcrumb';
 import Calendar from 'primevue/calendar';
@@ -35,16 +34,17 @@ import DataTable from 'primevue/datatable';
 import DataView from 'primevue/dataview';
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions';
 import DeferredContent from 'primevue/deferredcontent';
-import DialogService from 'primevue/dialogservice'
+import PrimeDialog from 'primevue/dialog';
+import DialogService from 'primevue/dialogservice';
 import Divider from 'primevue/divider';
 import Dock from 'primevue/dock';
 import Dropdown from 'primevue/dropdown';
 import DynamicDialog from 'primevue/dynamicdialog';
-
+import PrimeFieldset from 'primevue/fieldset';
 import FileUpload from 'primevue/fileupload';
 import FocusTrap from 'primevue/focustrap';
 import Galleria from 'primevue/galleria';
-
+import PrimeImage from 'primevue/image';
 import InlineMessage from 'primevue/inlinemessage';
 import Inplace from 'primevue/inplace';
 import InputSwitch from 'primevue/inputswitch';
@@ -54,7 +54,7 @@ import InputNumber from 'primevue/inputnumber';
 import Knob from 'primevue/knob';
 import Listbox from 'primevue/listbox';
 import MegaMenu from 'primevue/megamenu';
-
+import PrimeMenu from 'primevue/menu';
 import Menubar from 'primevue/menubar';
 import Message from 'primevue/message';
 import MultiSelect from 'primevue/multiselect';
@@ -68,6 +68,7 @@ import PickList from 'primevue/picklist';
 import ProgressBar from 'primevue/progressbar';
 import ProgressSpinner from 'primevue/progressspinner';
 import Rating from 'primevue/rating';
+import PrimeButton from 'primevue/button';
 import RadioButton from 'primevue/radiobutton';
 import Ripple from 'primevue/ripple';
 import Row from 'primevue/row';
@@ -85,7 +86,7 @@ import Steps from 'primevue/steps';
 import StyleClass from 'primevue/styleclass';
 import TabMenu from 'primevue/tabmenu';
 import TieredMenu from 'primevue/tieredmenu';
-
+import PrimeTextarea from 'primevue/textarea';
 import ToastService from 'primevue/toastservice';
 import Toolbar from 'primevue/toolbar';
 import TabView from 'primevue/tabview';
@@ -127,44 +128,19 @@ const options: PluginOptions = {
     }
 };
 
-// DataTable.use(DataTablesCore);
-// DataTable.use(DataTablesLib);
-// DataTable.use(DatatableSelect);
-// const app = createApp(App);
-
-// createApp(App)
-//     .component('DataTable', DataTable)
-//     .component('font-awesome-icon', FontAwesomeIcon)
-//     .component('Column', Column)
-//     .component('Row', Row)
-//     .use(store)
-//     .use(router)
-//     .use(VueWindowSizePlugin)
-//     .use(Toast, options)
-//     .use(i18n as any)
-//     .use(ProfabricComponents)
-//     .mount('#app');
-
-
-
-
-
-
-
 const app = createApp(App);
 
-app.use(PrimeVue, { ripple: true });
+app.use(PrimeVue, {ripple: true});
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
 app.use(router);
-app.use(store)
-app.use(router)
-app.use(VueWindowSizePlugin)
-app.use(Toast, options)
-app.use(i18n as any)
-app.use(ProfabricComponents)
-
+app.use(store);
+app.use(router);
+app.use(VueWindowSizePlugin);
+app.use(Toast, options);
+app.use(i18n as any);
+app.use(ProfabricComponents);
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
@@ -173,13 +149,14 @@ app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
 
 app.component('Accordion', Accordion);
-app.component('font-awesome-icon', FontAwesomeIcon)
+app.component('font-awesome-icon', FontAwesomeIcon);
 app.component('AccordionTab', AccordionTab);
 app.component('AutoComplete', AutoComplete);
 app.component('Avatar', Avatar);
 app.component('AvatarGroup', AvatarGroup);
 app.component('Badge', Badge);
 app.component('BlockUI', BlockUI);
+app.component('PrimeButton', PrimeButton);
 app.component('Breadcrumb', Breadcrumb);
 app.component('Calendar', Calendar);
 app.component('Card', Card);
@@ -201,6 +178,7 @@ app.component('DeferredContent', DeferredContent);
 app.component('Divider', Divider);
 app.component('Dock', Dock);
 app.component('Dropdown', Dropdown);
+app.component('PrimeDialog', PrimeDialog);
 app.component('DynamicDialog', DynamicDialog);
 app.component('FileUpload', FileUpload);
 app.component('Galleria', Galleria);
@@ -255,6 +233,5 @@ app.component('TreeSelect', TreeSelect);
 app.component('TreeTable', TreeTable);
 app.component('TriStateCheckbox', TriStateCheckbox);
 app.component('VirtualScroller', VirtualScroller);
-
 
 app.mount('#app');
