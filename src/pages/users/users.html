@@ -20,8 +20,8 @@
                 <h3 class="card-title">Users</h3>
             </div>
             <div class="card-body">
-                <v-container>
-                    <DataTable
+               
+                    <!-- <DataTable
                       class="table table-hover table-striped"
                       :data="data"
                       :columns="columns"
@@ -36,9 +36,77 @@
                       ref="table"
                       width="100%"
                     >
+                    </DataTable> -->
+                    <DataTable 
+                    :value="data"
+                    v-model:filters="filters"
+                    filterDisplay="row"
+                    :loading="loading"
+                    :rowsPerPageOptions="[5, 10, 20, 50]"
+                    :rows="10"
+                    :globalFilterFields="['displayName', 'email', 'UserPhone']"
+                     tableStyle="min-width: 50rem" 
+                     dataKey="id" 
+                     showGridlines
+                     scrollable 
+                     scrollHeight="700px"
+                      paginator
+                      resizableColumns 
+                      stripedRows 
+                      columnResizeMode="fit"
+                      ref="dt" >
+                     <template #header>
+                        <div class="flex justify-content-end">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search" />
+                                <Button icon="pi pi-external-link" label="Export" @click="exportCSV($event)" />
+                                <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+                            </span>
+                        </div>  
+                    </template>
+                        <Column header="" style="min-width: 2rem">
+                            <template #body="{ data }">
+                                <div class="flex align-items-center gap-2">
+                                    <img :alt="data.displayName" :src="`${data.imageUrl}`" style="width: 32px;border-radius: 50%;" />
+                                </div>
+                            </template>
+                        </Column>
+                        <Column field="displayName" header="Display Name" filterField="email" sortable style="min-width: 12rem">
+                            <template #body="{ data }">
+                                {{ data.displayName }}
+                            </template>
+                        </Column>
+                        <Column field="email" header="Email" filterField="displayName" sortable style="min-width: 12rem">
+                            <template #body="{ data }">
+                                {{ data.email }}
+                            </template>
+                        </Column>
+                        <Column field="phone" header="Phone" style="min-width: 12rem">
+                            <template #body="{ data }">
+                                {{ data.phone }}
+                            </template>
+                        </Column>
+                        <Column field="address" header="Address" style="min-width: 12rem">
+                            <template #body="{ data }">
+                                {{ data.address }}
+                            </template>
+                        </Column>
+                        <Column field="isDeleted" header="Is Deleted" style="min-width: 12rem">
+                            <template #body="{ data }">
+                                {{ data.isDeleted }}
+                            </template>
+                        </Column>
+                        <Column field="approvedFlag" header="Is Banned" style="min-width: 12rem">
+                            <template #body="{ data }">
+                                {{ data.approvedFlag }}
+                            </template>
+                        </Column>
+                        <Column field="withdrawBalance" header="Amount Owed" style="min-width: 12rem">
+                            <template #body="{ data }">
+                                {{ data.withdrawBalance }}
+                            </template>
+                        </Column>
                     </DataTable>
-                    
-                  </v-container>
             </div>
             <!-- /.card-body -->
             <!-- /.card-footer-->

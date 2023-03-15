@@ -7,10 +7,7 @@ const getError = (error: any) => {
 
 export const getAllUsers = async () => {
     try {
-        const response = await ApiManager.post(
-            'Admin/AdminGetAllusers',
-            null
-        );
+        const response = await ApiManager.post('Admin/AdminGetAllusers', null);
         return response;
     } catch (error: any) {
         throw getError(error);
