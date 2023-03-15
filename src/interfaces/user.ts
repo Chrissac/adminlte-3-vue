@@ -23,6 +23,7 @@ export interface IUsers {
     ApprovedFlag?: boolean | null;
     LoginTypeId: number;
     WithdrawBalance?: number | null;
+    UserType: string;
     Difficulty: string;
     DifficultyLevel: number;
 }

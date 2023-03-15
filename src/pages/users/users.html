@@ -86,11 +86,21 @@
                                 <InputText v-model="data[field]" />
                             </template>
                         </Column>
-                        <!-- <Column field="phone" header="Phone" style="min-width: 12rem">
-                            <template #body="{ data }">
-                                {{ data.phone }}
+                        <Column field="userType" header="Type" sortable style="min-width: 12rem">
+                            {data[field]}
+                        </Column>
+                        <Column field="difficulty" header="Difficulty" style="width: 20%" sortable>
+                            <template #editor="{ data, field }">
+                                <Dropdown v-model="data[field]" :options="levels" optionLabel="label" optionValue="label" placeholder="Select difficulty">
+                                    <template #option="slotProps">
+                                        <Tag :value="slotProps.option.label"  />
+                                    </template>
+                                </Dropdown>
                             </template>
-                        </Column> -->
+                            <template #body="slotProps">
+                                <Tag :value="slotProps.data.difficulty"  />
+                            </template>
+                        </Column>
                         <Column field="phone" header="Phone" sortable style="width: 20%">
                             <template #editor="{ data, field }">
                                 <InputText v-model="data[field]" />
