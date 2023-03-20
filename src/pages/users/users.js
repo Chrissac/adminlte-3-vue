@@ -19,7 +19,11 @@ export default {
         { label: 'B', value: 4 },
         { label: 'A', value: 5 },
         { label: 'AA', value: 6 }
-    ]
+      ],
+      statuses: [
+        { label: "true", value: true },
+        { label: "false", value: false }
+      ]
       }
     },
     async mounted() {
@@ -32,7 +36,18 @@ export default {
           const userIndex = this.users.findIndex(user => user.id === newData.id);
           this.users[userIndex] = newData
           // this.users = (await getAllUsers()).data;
-      }
+      },
+      getStatusLabel(status) {
+        switch (status) {
+            case true:
+                return 'danger';
+
+            case false:
+                return 'success';
+            default:
+                return null;
+        }
+    },
     }
 };
 

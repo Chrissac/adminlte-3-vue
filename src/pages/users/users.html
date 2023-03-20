@@ -82,9 +82,7 @@
                             </template>
                         </Column>
                         <Column field="email" header="Email" filterField="email" sortable style="min-width: 12rem">
-                            <template #editor="{ data, field }">
-                                <InputText v-model="data[field]" />
-                            </template>
+                            {data[field]}
                         </Column>
                         <Column field="userType" header="Type" sortable style="min-width: 12rem">
                             {data[field]}
@@ -107,18 +105,31 @@
                             </template>
                         </Column>
                         <Column field="address" header="Address" sortable style="min-width: 12rem">
-                            <template #editor="{ data, field }">
-                                <InputText v-model="data[field]" />
-                            </template>
+                            {data[field]}
                         </Column>
                         <Column field="isDeleted" header="Is Deleted" sortable style="min-width: 12rem">
+                            {data[field]}
                             <template #editor="{ data, field }">
-                                <InputText v-model="data[field]" />
+                                <Dropdown v-model="data[field]" :options="statuses" optionLabel="label" optionValue="value" placeholder="Select a Status">
+                                    <template #option="slotProps">
+                                        <Tag :value="slotProps.option.value" :severity="getStatusLabel(slotProps.option.value)" />
+                                    </template>
+                                </Dropdown>
+                            </template>
+                            <template #body="slotProps">
+                                <Tag :value="slotProps.data.isDeleted" :severity="getStatusLabel(slotProps.data.isDeleted)" />
                             </template>
                         </Column>
                         <Column field="approvedFlag" header="Is Banned" sortable style="min-width: 12rem">
                             <template #editor="{ data, field }">
-                                <InputText v-model="data[field]" />
+                                <Dropdown v-model="data[field]" :options="statuses" optionLabel="label" optionValue="value" placeholder="Select a Status">
+                                    <template #option="slotProps">
+                                        <Tag :value="slotProps.option.value" :severity="getStatusLabel(slotProps.option.value)" />
+                                    </template>
+                                </Dropdown>
+                            </template>
+                            <template #body="slotProps">
+                                <Tag :value="slotProps.data.approvedFlag" :severity="getStatusLabel(slotProps.data.approvedFlag)" />
                             </template>
                         </Column>
                         <Column field="withdrawBalance" sortable header="Amount Owed" style="min-width: 12rem">
