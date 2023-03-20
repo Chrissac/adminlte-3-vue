@@ -21,8 +21,8 @@ export default {
         { label: 'AA', value: 6 }
       ],
       statuses: [
-        { label: "true", value: true },
-        { label: "false", value: false }
+        { label: true, value: true },
+        { label: false, value: false }
       ]
       }
     },
@@ -43,12 +43,15 @@ export default {
                 return 'danger';
 
             case false:
-                return 'success';
+                return 'danger';
             default:
                 return null;
         }
     },
+    exportCSV() {
+      this.$refs.dt.exportCSV();
     }
+  }
 };
 
 
