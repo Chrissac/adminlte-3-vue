@@ -7,17 +7,6 @@ const getError = (error: any) => {
 };
 
 export const loginByAuth = async (email: string, password: string) => {
-    //old code. we will now use other shit
-    // axios.post(BaseUrl+"", {}, {
-    //       auth: {
-    //             username: userName,
-    //             password: password
-    //       }
-    // }).then(function(response) {
-    //       console.log('Authenticated');
-    // }).catch(function(error) {
-    // console.log('Error on Authentication');
-    // });
     try {
         const data = {
             Email: email,

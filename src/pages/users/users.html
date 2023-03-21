@@ -17,26 +17,9 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Users</h3>
+                <h3 class="card-title">Update / Edit / Remove Users</h3>
             </div>
             <div class="card-body">
-               
-                    <!-- <DataTable
-                      class="table table-hover table-striped"
-                      :data="data"
-                      :columns="columns"
-                      :rowCallback="rowCallback"
-                      :options="{
-                        paging: true,
-                        searching: true,
-                        select: true,
-                        editable: true,
-                        scrollX:true
-                      }"
-                      ref="table"
-                      width="100%"
-                    >
-                    </DataTable> -->
                     <DataTable 
                     v-model:editingRows="editingRows"
                     :value="users"
@@ -69,13 +52,6 @@
                         </div>  
                     </template>
                         <Column :rowEditor="true" style="width: 10%; min-width: 5rem" bodyStyle="text-align:center"></Column>
-                        <!-- <Column header="" style="min-width: 2rem;">
-                            <template #body="{ data }">
-                                <div class="flex align-items-center gap-2">
-                                    <img :alt="data.displayName" :src="`${data.imageUrl}`" style="width: 32px;border-radius: 50%;" />
-                                </div>
-                            </template>
-                        </Column> -->
                         <Column field="displayName" header="Name" filterField="displayName" sortable  style="min-width: 12rem;">
                             <template #editor="{ data, field }">
                                 <InputText v-model="data[field]" />
