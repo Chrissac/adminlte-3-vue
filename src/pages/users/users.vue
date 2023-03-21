@@ -1,3 +1,3 @@
 <template src="./users.html"></template>
-<script src="./users.js" lang="ts"></script>
+<script src="./usertest.ts" lang="ts"></script>
 <style src="./users.scss" lang="scss"></style>
