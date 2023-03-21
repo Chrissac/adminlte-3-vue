@@ -43,19 +43,24 @@ export const MENU = [
     },
     {
         name: i18n.global.t('labels.games'),
-        icon: 'nav-icon fas fa-hockey-puck',
-        children: [
-            {
-                name: i18n.global.t('labels.activeGames'),
-                path: '/sub-menu-1',
-                icon: 'nav-icon fas fa-clock'
-            },
+        path: '/games',
+        icon: 'nav-icon fas fa-hockey-puck'
+    },
+    // {
+    //     name: i18n.global.t('labels.games'),
+    //     icon: 'nav-icon fas fa-hockey-puck',
+    //     children: [
+    //         {
+    //             name: i18n.global.t('labels.activeGames'),
+    //             path: '/sub-menu-1',
+    //             icon: 'nav-icon fas fa-clock'
+    //         },
 
-            {
-                name: i18n.global.t('labels.previousGames'),
-                path: '/sub-menu-2',
-                icon: 'nav-icon fas fa-chevron-left'
-            }
-        ]
-    }
+    //         {
+    //             name: i18n.global.t('labels.previousGames'),
+    //             path: '/sub-menu-2',
+    //             icon: 'nav-icon fas fa-chevron-left'
+    //         }
+    //     ]
+    // }
 ];
