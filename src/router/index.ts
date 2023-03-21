@@ -12,6 +12,7 @@ import RecoverPassword from '@/modules/recover-password/recover-password.vue';
 import PrivacyPolicy from '@/modules/privacy-policy/privacy-policy.vue';
 import SubMenu from '@/pages/main-menu/sub-menu/sub-menu.vue';
 import Blank from '@/pages/blank/blank.vue';
+import Games from '@/pages/games/games.vue';
 import Users from '@/pages/users/users.vue';
 import actions from '@/store/auth/actions';
 const routes: Array<RouteRecordRaw> = [
@@ -43,6 +44,14 @@ const routes: Array<RouteRecordRaw> = [
                 path: 'blank',
                 name: 'Blank',
                 component: Blank,
+                meta: {
+                    requiresAuth: true
+                }
+            },
+            {
+                path: 'games',
+                name: 'Games',
+                component: Games,
                 meta: {
                     requiresAuth: true
                 }

@@ -1,9 +1,8 @@
 import {getAllUsers} from '@/services/usersAuth';
-import {FilterMatchMode, FilterMatchModeOptions} from 'primevue/api';
 import {IUsers} from '@/interfaces/user';
 import {ApiManager} from '@/services/ApiManager';
 import {defineComponent} from 'vue';
-
+import { useToast } from "primevue/usetoast";
 export default defineComponent({
     data() {
         return {
@@ -54,11 +53,16 @@ export default defineComponent({
                 'Admin/UpdateUserDetails',
                 userDetails
             );
+            const toast = useToast();
             if (response?.status) {
                 this.loading = false;
+                toast.add({ severity: 'success', summary: 'Update Successfull!', detail: 'User Updated Successfully', life: 3000 });
             } else {
                 this.loading = false;
+                toast.add({ severity: 'success', summary: 'Update Successfull!', detail: 'Message Content', life: 3000 });
             }
+            
+            
         },
         getStatusLabel(status: boolean | null) {
             switch (status) {
