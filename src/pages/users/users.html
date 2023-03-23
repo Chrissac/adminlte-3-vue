@@ -109,11 +109,6 @@
                                 <Tag :value="slotProps.data.approvedFlag" :severity="getStatusLabel(slotProps.data.approvedFlag)" />
                             </template>
                         </Column>
-                        <Column field="withdrawBalance" sortable header="Amount Owed" style="min-width: 12rem">
-                            <template #editor="{ data, field }">
-                                <InputText v-model="data[field]" />
-                            </template>
-                        </Column>
                     </DataTable>
             </div>
             <!-- /.card-body -->

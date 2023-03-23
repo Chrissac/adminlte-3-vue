@@ -67,10 +67,10 @@ export default defineComponent({
         getStatusLabel(status: boolean | null) {
             switch (status) {
                 case true:
-                    return 'danger';
+                    return 'success';
 
                 case false:
-                    return 'success';
+                    return 'danger';
 
                 default:
                     return null;
