@@ -15,23 +15,106 @@
     <!-- Default box -->
     <div class="container-fluid">
         <div class="card">
+            <div class="card-body row">
+                <form @submit="onSubmit">
+                    <div class="row">
+                        <div class="col-md-">
+                            <label for="fromDate" style="display: block;">From Date</label>
+                            <Calendar id="fromDate" v-model="startDate" :class="{ 'p-invalid': startDateErrorMessage }"
+                                aria-describedby="date-error" showIcon />
+                            <small class="p-error" id="date-error">{{ startDateErrorMessage || '&nbsp;' }}</small>
+                        </div>
+                        <div class="col-md-">
+                            <label for="toDate" style="display: block;">To Date</label>
+                            <Calendar id="toDate" v-model="endDate" :class="{ 'p-invalid': endDateErrorMessage }"
+                                aria-describedby="date-error" showIcon />
+                            <small class="p-error" id="date-error">{{ endDateErrorMessage || '&nbsp;' }}</small>
+                            <PrimeButton type="submit" label="Go"  severity="success" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <PrimeToast />
             <div class="card-header">
                 <h3 class="card-title">Games List</h3>
             </div>
-            <div class="card-body">
-                <div class="card flex justify-content-center">
-                    <form @submit="onSubmit" class="flex flex-column gap-2">
-                        <label for="date">Date</label>
-                        <Calendar id="date" v-model="value" :class="{ 'p-invalid': errorMessage }" aria-describedby="date-error" />
-                        <small class="p-error" id="date-error">{{ errorMessage || '&nbsp;' }}</small>
-                        <Button type="submit" label="Submit" />
-                    </form>
-                    <Toast />
-                </div>
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer"></div>
-            <!-- /.card-footer-->
+            <DataTable 
+            :value="games"
+            v-model:filters="filters"
+            filterDisplay="row"
+            :loading="loading"
+            :rowsPerPageOptions="[5, 10, 20, 50]"
+            :rows="10"
+            :globalFilterFields="['displayName', 'email', 'gameLocation']"
+            tableStyle="min-width: 50rem" 
+            dataKey="id" 
+            showGridlines
+            scrollable 
+            scrollHeight="700px"
+            paginator
+            resizableColumns 
+            stripedRows 
+            columnResizeMode="fit" 
+            ref="dt"
+            tableClass="editable-cells-table"
+            editMode="row">
+             <template #header>
+                <div class="flex justify-content-end">
+                    <PrimeButton icon="pi pi-external-link" label="Export" @click="exportCSV($event)" style="margin-right: 1rem;" />
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText v-model="filters['global'].value" placeholder="Keyword Search"  />
+                    </span>
+                </div>  
+            </template>
+                <Column field="displayName" header="Name" filterField="displayName" sortable  style="min-width: 12rem;">
+                    <template #editor="{ data, field }">
+                        <InputText v-model="data[field]" />
+                    </template>
+                </Column>
+                <Column field="email" header="Email" filterField="email" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="phone" header="Phone" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="location" header="Location" filterField="gameLocation" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="dateBooked" header="Date Booked" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="gameDate" header="Game Date" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="startTime" header="Start Time" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="gameLength" header="Duration" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="difficulty" header="Difficulty" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="GameType" header="Game Type" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="amountCharged" header="Amount Charged" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="revenueAmount" header="Revenue Amount" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="isRefund" header="Is Refund" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="isPastDate" header="Is PastDate" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+                <Column field="isDeleted" header="Is Deleted" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
+            </DataTable>
         </div>
     </div>
     <!-- /.card -->

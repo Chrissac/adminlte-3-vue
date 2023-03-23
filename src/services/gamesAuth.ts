@@ -5,9 +5,13 @@ const getError = (error: any) => {
     return new Error(message);
 };
 
-export const getAllUsers = async () => {
+export const getAllGamesByDates = async (startDate:string, endDate:string) => {
     try {
-        const response = await ApiManager.post('Admin/AdminGetAllusers', null);
+        const data = {
+          startDate : startDate,
+          endDate : endDate   
+        };
+        const response = await ApiManager.post('Admin/GetAllGamesByDates', data);
         return response;
     } catch (error: any) {
         throw getError(error);
