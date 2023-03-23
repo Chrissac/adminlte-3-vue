@@ -47,7 +47,7 @@
             :rows="10"
             :globalFilterFields="['displayName', 'email', 'gameLocation']"
             tableStyle="min-width: 50rem" 
-            dataKey="id" 
+            dataKey="bookingId" 
             showGridlines
             scrollable 
             scrollHeight="700px"
@@ -57,7 +57,10 @@
             columnResizeMode="fit" 
             ref="dt"
             tableClass="editable-cells-table"
-            editMode="row">
+            editMode="row"
+            v-model:expandedRows="expandedRows"
+
+            >
              <template #header>
                 <div class="flex justify-content-end">
                     <PrimeButton icon="pi pi-external-link" label="Export" @click="exportCSV($event)" style="margin-right: 1rem;" />
@@ -67,6 +70,7 @@
                     </span>
                 </div>  
             </template>
+            <Column expander style="width: 5rem" />
                 <Column field="displayName" header="Name" filterField="displayName" sortable  style="min-width: 12rem;">
                     <template #editor="{ data, field }">
                         <InputText v-model="data[field]" />
@@ -93,6 +97,9 @@
                 <Column field="gameLength" header="Duration" sortable style="min-width: 12rem">
                     {data[field]}
                 </Column>
+                <Column field="goaliesNeeded" header="Quantity" sortable style="min-width: 12rem">
+                    {data[field]}
+                </Column>
                 <Column field="difficulty" header="Difficulty" sortable style="min-width: 12rem">
                     {data[field]}
                 </Column>
@@ -114,6 +121,16 @@
                 <Column field="isDeleted" header="Is Deleted" sortable style="min-width: 12rem">
                     {data[field]}
                 </Column>
+                <template #expansion="slotProps">
+                    <div class="p-3">
+                        <h5>Confirmed Goalies</h5>
+                        <DataTable :value="slotProps.data.goalies">
+                            <Column field="displayName" header="Goalie Name" sortable style="width: 12rem"></Column>
+                            <Column field="email" header="Goalie Email" sortable style="width: 12rem"></Column>
+                            <Column field="phone" header="Goalie Phone" sortable style="width: 12rem"></Column>
+                        </DataTable>
+                    </div>
+                </template>
             </DataTable>
         </div>
     </div>

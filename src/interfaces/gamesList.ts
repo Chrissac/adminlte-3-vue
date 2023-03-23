@@ -1,4 +1,7 @@
+import { Goalies } from "./goalies";
+
 export interface IGames {
+    bookingId:number;
     displayName: string;
     email: string;
     phone: string;
@@ -16,4 +19,5 @@ export interface IGames {
     isRefund: boolean;
     isPastDate: boolean;
     isDeleted: boolean;
+    goalies: Goalies[];
 }

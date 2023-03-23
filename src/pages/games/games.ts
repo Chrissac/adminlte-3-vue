@@ -5,6 +5,7 @@ import { defineComponent,ref,Ref } from 'vue';
 import {IGames} from '@/interfaces/gamesList';
 import { getAllGamesByDates } from '@/services/gamesAuth';
 import { stringifyQuery } from 'vue-router';
+import { Goalies } from '@/interfaces/goalies';
 export default defineComponent({
   setup() {
     const { handleSubmit, resetForm } = useForm();
@@ -18,6 +19,7 @@ export default defineComponent({
     );
     const toast = useToast();
     const games = ref([] as IGames[]);
+    const expandedRows = ref([] as Goalies[]);
     const loading = ref(false);
       const filters = ref({
         global: { value: '', matchMode: 'contains' },
@@ -46,14 +48,9 @@ export default defineComponent({
     const onSubmit = handleSubmit(async (values) => {
       filters.value.global.value = null;
       if (values.startDate && values.endDate) {
-        toast.add({
-          severity: 'info',
-          summary: 'Form Submitted',
-          detail: `Start Date: ${values.startDate.toLocaleDateString()} - End Date: ${values.endDate.toLocaleDateString()}`,
-          life: 3000,
-        });
         loading.value = true;
         games.value = (await getAllGamesByDates(values.startDate,values.endDate)).data;
+        expandedRows.value = null;
         loading.value = false;
       }
     });
@@ -67,7 +64,8 @@ export default defineComponent({
         games,
         loading,
         filters,
-        exportCSV
+        exportCSV,
+        expandedRows
       };
     },
   });
