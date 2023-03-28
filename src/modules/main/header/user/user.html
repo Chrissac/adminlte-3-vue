@@ -46,16 +46,16 @@
         </li> -->
         <!-- Menu Footer-->
         <li class="user-footer">
-            <router-link
+            <!-- <router-link
                 to="/profile"
                 class="btn btn-default btn-flat"
                 @click="isDropdownOpened = false;"
             >
                 {{ $t("labels.profile") }}
-            </router-link>
+            </router-link> -->
             <button
                 @click="logout"
-                class="btn btn-default btn-flat float-right"
+                class="btn btn-default btn" style="width: 100%;"
             >
                 {{ $t("labels.signOut") }}
             </button>

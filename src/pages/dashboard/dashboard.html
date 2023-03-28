@@ -25,78 +25,68 @@
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
+        <form @submit="onSubmit">
+            <div class="row" style="margin-bottom: 1rem;">
+                <div class="col-md-">
+                    <label for="fromDate" style="display: block;">From Date</label>
+                    <Calendar id="fromDate" v-model="startDate" :class="{ 'p-invalid': startDateErrorMessage }"
+                        aria-describedby="date-error" showIcon />
+                    <small class="p-error" id="date-error">{{ startDateErrorMessage || '&nbsp;' }}</small>
+                </div>
+                <div class="col-md-">
+                    <label for="toDate" style="display: block;">To Date</label>
+                    <Calendar id="toDate" v-model="endDate" :class="{ 'p-invalid': endDateErrorMessage }"
+                        aria-describedby="date-error" showIcon />
+                    <small class="p-error" id="date-error">{{ endDateErrorMessage || '&nbsp;' }}</small>
+                    <PrimeButton type="submit" label="Go"  severity="success" />
+                </div>
+            </div>
+        </form>
         <div class="row">
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>150</h3>
-
-                        <p>New Orders</p>
+        <div class="col-md-4">
+            <div class="card p-0 widget-overview-box widget-overview-box-1">
+                <div class="flex align-items-center justify-content-start pt-3 pb-2 px-4">
+                    <div class="pl-3 overflow-hidden">
+                        <i class="pi pi-users text-6xl"></i>
+                        <span class="header  white-space-nowrap overflow-hidden" style="margin-left: 1rem;">USERS SIGNED UP</span>
+                        <!-- <span class="block text-4xl font-bold" :style="{'color':'#035388','font-size':'2rem','display':'block','font-weight':'bold'  }">{{dashboardData.kpiData.userCount}}</span> -->
                     </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <router-link to="/" class="small-box-footer"
-                        >More info <i class="fas fa-arrow-circle-right"></i
-                    ></router-link>
                 </div>
+                <img
+                    :src="'layout/images/users.svg'"
+                    class="w-full" alt="users">
             </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                        <p>Bounce Rate</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <router-link to="/" class="small-box-footer"
-                        >More info <i class="fas fa-arrow-circle-right"></i
-                    ></router-link>
-                </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-warning">
-                    <div class="inner">
-                        <h3>44</h3>
-
-                        <p>User Registrations</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-person-add"></i>
-                    </div>
-                    <router-link to="/" class="small-box-footer"
-                        >More info <i class="fas fa-arrow-circle-right"></i
-                    ></router-link>
-                </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        <h3>65</h3>
-
-                        <p>Unique Visitors</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                    </div>
-                    <router-link to="/" class="small-box-footer"
-                        >More info <i class="fas fa-arrow-circle-right"></i
-                    ></router-link>
-                </div>
-            </div>
-            <!-- ./col -->
         </div>
-        <!-- /.row -->
+        <div class="col-md-4">
+            <div class="card p-0 widget-overview-box widget-overview-box-2">
+                <div class="flex align-items-center justify-content-start pt-3 pb-2 px-4">
+                    <div class="pl-3 overflow-hidden">
+                        <i class="fas fa-hockey-puck text-6xl"></i>
+                        <span class="header white-space-nowrap overflow-hidden" style="margin-left: 1rem;">GAMES PLAYED</span>
+                        <!-- <span class="block text-4xl font-bold" :style="{'color':'#035388','font-size':'2rem','display':'block','font-weight':'bold'  }">{{dashboardData.kpiData.numberOfGamesPlayed}}</span> -->
+                    </div>
+                </div>
+                <img
+                    :src="'layout/images/locations.svg'"
+                    class="w-full" style="width:100% !important" alt="users">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-0 widget-overview-box widget-overview-box-3">
+                <div class="flex align-items-center justify-content-start pt-3 pb-2 px-4">
+                    
+                    <div class="pl-3 overflow-hidden">
+                        <i class="fas fa-dollar-sign text-6xl"></i>
+                        <span class="header white-space-nowrap overflow-hidden" style="margin-left: 1rem;">TOTAL SALES</span>
+                        <!-- <span class="block text-4xl font-bold" :style="{'color':'#035388','font-size':'2rem','display':'block','font-weight':'bold'  }">{{dashboardData.kpiData.totalSales}}</span> -->
+                    </div>
+                </div>
+                <img
+                    :src="'layout/images/rate.svg'"
+                    class="w-full" alt="users">
+            </div>
+        </div>
+        </div>
     </div>
     <!-- /.container-fluid -->
 </section>
