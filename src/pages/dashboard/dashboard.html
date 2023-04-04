@@ -24,24 +24,29 @@
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <form @submit="onSubmit">
+    <div class="progress-spinner" v-if="isLoading">
+        <ProgressSpinner />
+    </div>
+    <div class="card flex justify-content-center">
+        
+            <div class="container-fluid">
+        
             <div class="row" style="margin-bottom: 1rem;">
                 <div class="col-md-">
                     <label for="fromDate" style="display: block;">From Date</label>
-                    <Calendar id="fromDate" v-model="startDate" :class="{ 'p-invalid': startDateErrorMessage }"
+                    <Calendar id="fromDate" v-model="startDate" 
                         aria-describedby="date-error" showIcon />
-                    <small class="p-error" id="date-error">{{ startDateErrorMessage || '&nbsp;' }}</small>
+                    <small class="p-error" id="date-error">{{'&nbsp;&nbsp;&nbsp;' }}</small>
                 </div>
                 <div class="col-md-">
                     <label for="toDate" style="display: block;">To Date</label>
-                    <Calendar id="toDate" v-model="endDate" :class="{ 'p-invalid': endDateErrorMessage }"
+                    <Calendar id="toDate" v-model="endDate" 
                         aria-describedby="date-error" showIcon />
-                    <small class="p-error" id="date-error">{{ endDateErrorMessage || '&nbsp;' }}</small>
-                    <PrimeButton type="submit" label="Go"  severity="success" />
+                    <small class="p-error" id="date-error">{{ '&nbsp;&nbsp;&nbsp;' }}</small>
+                    <PrimeButton type="submit" label="Go"  severity="success"  @click="getSales" />
                 </div>
             </div>
-        </form>
+        
         <div class="row">
         <div class="col-md-4">
             <div class="card p-0 widget-overview-box widget-overview-box-1">
@@ -49,7 +54,7 @@
                     <div class="pl-3 overflow-hidden">
                         <i class="pi pi-users text-6xl"></i>
                         <span class="header  white-space-nowrap overflow-hidden" style="margin-left: 1rem;">USERS SIGNED UP</span>
-                        <!-- <span class="block text-4xl font-bold" :style="{'color':'#035388','font-size':'2rem','display':'block','font-weight':'bold'  }">{{dashboardData.kpiData.userCount}}</span> -->
+                        <span v-if="dashboardData.kpiData" class="block text-4xl font-bold" :style="{'color':'#035388','font-size':'2rem','display':'block','font-weight':'bold'  }">{{dashboardData.kpiData.userCount}}</span>
                     </div>
                 </div>
                 <img
@@ -63,7 +68,7 @@
                     <div class="pl-3 overflow-hidden">
                         <i class="fas fa-hockey-puck text-6xl"></i>
                         <span class="header white-space-nowrap overflow-hidden" style="margin-left: 1rem;">GAMES PLAYED</span>
-                        <!-- <span class="block text-4xl font-bold" :style="{'color':'#035388','font-size':'2rem','display':'block','font-weight':'bold'  }">{{dashboardData.kpiData.numberOfGamesPlayed}}</span> -->
+                        <span v-if="dashboardData.kpiData" class="block text-4xl font-bold" :style="{'color':'#035388','font-size':'2rem','display':'block','font-weight':'bold'  }">{{dashboardData.kpiData.numberOfGamesPlayed}}</span>
                     </div>
                 </div>
                 <img
@@ -78,7 +83,7 @@
                     <div class="pl-3 overflow-hidden">
                         <i class="fas fa-dollar-sign text-6xl"></i>
                         <span class="header white-space-nowrap overflow-hidden" style="margin-left: 1rem;">TOTAL SALES</span>
-                        <!-- <span class="block text-4xl font-bold" :style="{'color':'#035388','font-size':'2rem','display':'block','font-weight':'bold'  }">{{dashboardData.kpiData.totalSales}}</span> -->
+                        <span v-if="dashboardData.kpiData" class="block text-4xl font-bold" :style="{'color':'#035388','font-size':'2rem','display':'block','font-weight':'bold'  }">{{dashboardData.kpiData.totalSales}}</span>
                     </div>
                 </div>
                 <img
@@ -88,6 +93,76 @@
         </div>
         </div>
     </div>
+    <DataTable 
+    :value="dashboardData.salesList"
+    v-model:filters="filters"
+    filterDisplay="row"
+    :rowsPerPageOptions="[5, 10, 20, 50]"
+    :globalFilterFields="['teamName', 'teamEmail', 'goalieName', 'goalieEmail','location']"
+    :rows="10"
+    tableStyle="min-width: 50rem" 
+    showGridlines
+    scrollable 
+    scrollHeight="700px"
+    paginator
+    resizableColumns 
+    stripedRows 
+    columnResizeMode="fit" 
+    ref="dt"
+    tableClass="editable-cells-table"
+    editMode="row">
+     <template #header>
+        <div class="flex justify-content-end">
+            <PrimeButton icon="pi pi-external-link" label="Export" @click="exportCSV($event)" style="margin-right: 1rem;" />
+            <span class="p-input-icon-left">
+                <i class="pi pi-search" />
+                <InputText v-model="filters['global'].value" placeholder="Keyword Search"  />
+            </span>
+        </div>  
+    </template>
+        <Column field="teamName" header="Team name" filterField="teamName" sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        <Column field="teamEmail" header="Team Email" filterField="teamEmail" sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        <Column field="hasBeenRefunded" header="Is Refunded" sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        <Column field="goalieName" header="Goalie Name" filterField="goalieName" sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        <Column field="goalieEmail" header="Goalie Email" filterField="goalieEmail" sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        <Column field="location" header="Game Location" filterField="location" sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        <Column field="bookingLength" header="Duration"  sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        <Column field="transactionDate" header="Date Charged" sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        <Column field="creditCardCharged" header="Credit Card" sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        <Column field="currency" header="Currency" sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        <Column field="amountCharged" header="Amount Charged" sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        <Column field="myPuckRevenue" header="Revenue" sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        <Column field="goalieOwed" header="Goalie Owed" sortable style="min-width: 12rem">
+            {data[field]}
+        </Column>
+        
+    </DataTable>
+    </div>
+
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
