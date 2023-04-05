@@ -7,7 +7,8 @@ import DataTable from 'primevue/datatable';
 export default class Dashboard extends Vue {
     public isLoading: boolean = true;
     public dashboardData: Ref<IDashboardData[]> = ref([]);
-    public dt: Ref<DataTable> = ref();
+    public dt: DataTable;
+    
     public filters: Ref<{
         global: {
           value: null | string;
@@ -23,19 +24,23 @@ export default class Dashboard extends Vue {
 
     public async beforeMount(): Promise<void> {
         this.dashboardData = (await getAdminSalesData(this.startDate, this.endDate)).data;
-        this.isLoading = false;
+        this.isLoading = false;     
     }
+    public mounted() {
+      if (this.$refs.dt) {
+        this.dt = this.$refs.dt as DataTable;
+      } else {
+        console.error('Error: DataTable component not found');
+      }
+    }
+
     public async getSales(): Promise<void> {
         this.isLoading = true;
         this.dashboardData = (await getAdminSalesData(this.startDate, this.endDate)).data;
         this.isLoading = false;
     }
     public exportCSV() {
-        if (this.dt && this.dt.value.exportCSV) {
-          this.dt.value.exportCSV()
-        } else {
-          console.error('Error: exportCSV method not found on datatable component');
-        }
+      this.dt.exportCSV();
       }
 
 }
