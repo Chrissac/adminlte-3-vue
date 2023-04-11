@@ -17,10 +17,10 @@ export default class Dashboard extends Vue {
       }> = ref({
         global: { value: null, matchMode: 'contains' },
       });
-    // public startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-    // public endDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999);
-    public startDate = new Date(2019, 10, 1); // November 1, 2019
-    public endDate = new Date(2019, 10, 30, 23, 59, 59, 999); // November 30, 2019, 23:59:59.999
+    public startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    public endDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999);
+    // public startDate = new Date(2019, 10, 1); // November 1, 2019
+    // public endDate = new Date(2019, 10, 30, 23, 59, 59, 999); // November 30, 2019, 23:59:59.999
 
     public async beforeMount(): Promise<void> {
         this.dashboardData = (await getAdminSalesData(this.startDate, this.endDate)).data;

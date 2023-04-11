@@ -97,7 +97,8 @@
                                 <Tag :value="slotProps.data.isDeleted" :severity="getStatusLabel(slotProps.data.isDeleted)" />
                             </template>
                         </Column>
-                        <Column field="approvedFlag" header="Is Banned" sortable style="min-width: 12rem">
+                        <Column field="approvedFlag" header="Is Approved" sortable style="min-width: 12rem">
+                            {data[field]}
                             <template #editor="{ data, field }">
                                 <Dropdown v-model="data[field]" :options="statuses" optionLabel="label" optionValue="value" placeholder="Select a Status">
                                     <template #option="slotProps">
