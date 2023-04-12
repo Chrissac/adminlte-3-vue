@@ -1,6 +1,3 @@
-import 'primevue/resources/themes/lara-light-blue/theme.css';
-import 'primevue/resources/primevue.min.css';
-import 'primeicons/primeicons.css';
 import store from './store';
 import router from './router';
 import {i18n} from './translation';
@@ -108,7 +105,9 @@ import {VueWindowSizePlugin} from 'vue-window-size/option-api';
 
 import {ProfabricComponents} from '@profabric/vue-components';
 import './index.scss';
-
+import 'primevue/resources/themes/lara-light-blue/theme.css';
+import 'primevue/resources/primevue.min.css';
+import 'primeicons/primeicons.css';
 const options: PluginOptions = {
     timeout: 5000,
     closeOnClick: true,

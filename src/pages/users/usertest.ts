@@ -1,9 +1,13 @@
+import { useToast } from 'primevue/usetoast';
 import {getAllUsers} from '@/services/usersAuth';
 import {IUsers} from '@/interfaces/user';
 import {ApiManager} from '@/services/ApiManager';
 import {defineComponent} from 'vue';
-import { useToast } from "primevue/usetoast";
 export default defineComponent({
+    setup() {
+        const toast = useToast();
+        return { toast };
+    },
     data() {
         return {
             loading: true,
@@ -30,6 +34,7 @@ export default defineComponent({
     async mounted() {
         this.users = (await getAllUsers()).data;
         this.loading = false;
+        this.toast
     },
     methods: {
         async onRowEditSave(event: {newData: IUsers; index: number}) {
@@ -53,13 +58,13 @@ export default defineComponent({
                 'Admin/UpdateUserDetails',
                 userDetails
             );
-            const toast = useToast();
+            // const toast = useToast();
             if (response?.status) {
                 this.loading = false;
-                toast.add({ severity: 'success', summary: 'Update Successfull!', detail: 'User Updated Successfully', life: 3000 });
+                 this.toast.add({ severity: 'success', summary: 'Update Successfull!', detail: 'User Updated Successfully', life: 3000 });
             } else {
                 this.loading = false;
-                toast.add({ severity: 'success', summary: 'Update Successfull!', detail: 'Message Content', life: 3000 });
+                this.toast.add({ severity: 'success', summary: 'Update Successfull!', detail: 'Message Content', life: 3000 });
             }
             
             
