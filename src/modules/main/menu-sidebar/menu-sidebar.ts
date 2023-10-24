@@ -37,14 +37,19 @@ export const MENU = [
         icon: 'nav-icon fas fa-tachometer-alt'
     },
     {
+        name: i18n.global.t('labels.games'),
+        path: '/games',
+        icon: 'nav-icon fas fa-solid fa-lock'
+    },
+    {
+        name: i18n.global.t('labels.availableGames'),
+        path: '/availableGames',
+        icon: 'nav-icon fas fa-solid fa-unlock'
+    },
+    {
         name: i18n.global.t('labels.users'),
         path: '/users',
         icon: 'nav-icon fas fa-users'
-    },
-    {
-        name: i18n.global.t('labels.games'),
-        path: '/games',
-        icon: 'nav-icon fas fa-hockey-puck'
     },
     // {
     //     name: i18n.global.t('labels.games'),

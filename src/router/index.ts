@@ -6,6 +6,7 @@ import Login from '@/modules/login/login.vue';
 import Register from '@/modules/register/register.vue';
 
 import Dashboard from '@/pages/dashboard/dashboard.vue';
+import AvailableGames from '@/pages/availableGames/availableGames.vue';
 import Profile from '@/pages/profile/profile.vue';
 import ForgotPassword from '@/modules/forgot-password/forgot-password.vue';
 import RecoverPassword from '@/modules/recover-password/recover-password.vue';
@@ -76,6 +77,14 @@ const routes: Array<RouteRecordRaw> = [
                 path: '',
                 name: 'Dashboard',
                 component: Dashboard,
+                meta: {
+                    requiresAuth: true
+                }
+            },
+            {
+                path: 'availableGames',
+                name: 'Available Games',
+                component: AvailableGames,
                 meta: {
                     requiresAuth: true
                 }
