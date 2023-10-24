@@ -15,63 +15,28 @@
     <!-- Default box -->
     <div class="container-fluid">
         <div class="card">
-            <div class="card-body row">
-                <form @submit="onSubmit">
-                    <div class="row">
-                        <div class="col-md-">
-                            <label for="fromDate" style="display: block;">From Date</label>
-                            <Calendar id="fromDate" v-model="startDate" :class="{ 'p-invalid': startDateErrorMessage }"
-                                aria-describedby="date-error" showIcon />
-                            <small class="p-error" id="date-error">{{ startDateErrorMessage || '&nbsp;' }}</small>
-                        </div>
-                        <div class="col-md-">
-                            <label for="toDate" style="display: block;">To Date</label>
-                            <Calendar id="toDate" v-model="endDate" :class="{ 'p-invalid': endDateErrorMessage }"
-                                aria-describedby="date-error" showIcon />
-                            <small class="p-error" id="date-error">{{ endDateErrorMessage || '&nbsp;' }}</small>
-                            <PrimeButton type="submit" label="Go"  severity="success" />
-                        </div>
-                    </div>
-                </form>
-            </div>
             <PrimeToast />
             <div class="card-header">
                 <h3 class="card-title">Games List</h3>
             </div>
-            <DataTable 
-            :value="games"
-            v-model:filters="filters"
-            filterDisplay="row"
-            :loading="loading"
-            :rowsPerPageOptions="[5, 10, 20, 50]"
-            :rows="10"
-            :globalFilterFields="['displayName', 'email', 'gameLocation']"
-            tableStyle="min-width: 50rem" 
-            dataKey="bookingId" 
-            showGridlines
-            scrollable 
-            scrollHeight="700px"
-            paginator
-            resizableColumns 
-            stripedRows 
-            columnResizeMode="fit" 
-            ref="dt"
-            tableClass="p-datatable-sm"
-            editMode="row"
-            v-model:expandedRows="expandedRows"
-
-            >
-             <template #header>
-                <div class="flex justify-content-end">
-                    <PrimeButton icon="pi pi-external-link" label="Export" @click="exportCSV($event)" style="margin-right: 1rem;" />
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText v-model="filters['global'].value" placeholder="Keyword Search"  />
-                    </span>
-                </div>  
-            </template>
-            <Column expander style="width: 5rem" />
-                <Column field="displayName" header="Name" filterField="displayName" sortable  style="min-width: 12rem;">
+            <DataTable :value="games" v-model:filters="filters" filterDisplay="row" :loading="loading"
+                :rowsPerPageOptions="[5, 10, 20, 50]" :rows="10"
+                :globalFilterFields="['displayName', 'email', 'gameLocation']" tableStyle="min-width: 50rem"
+                dataKey="bookingId" showGridlines scrollable scrollHeight="700px" paginator resizableColumns stripedRows
+                columnResizeMode="fit" ref="dt" tableClass="p-datatable-sm" editMode="row"
+                v-model:expandedRows="expandedRows">
+                <template #header>
+                    <div class="flex justify-content-end">
+                        <PrimeButton icon="pi pi-external-link" label="Export" @click="exportCSV($event)"
+                            style="margin-right: 1rem;" />
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search" />
+                            <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+                        </span>
+                    </div>
+                </template>
+                <Column expander style="width: 5rem" />
+                <Column field="displayName" header="Name" filterField="displayName" sortable style="min-width: 12rem;">
                     <template #editor="{ data, field }">
                         <InputText v-model="data[field]" />
                     </template>
@@ -112,22 +77,20 @@
                 <Column field="revenueAmount" header="Revenue Amount" sortable style="min-width: 12rem">
                     {data[field]}
                 </Column>
-                <Column field="isRefund" header="Is Refund" sortable style="min-width: 12rem">
-                    {data[field]}
-                </Column>
-                <Column field="isPastDate" header="Is PastDate" sortable style="min-width: 12rem">
-                    {data[field]}
-                </Column>
-                <Column field="isDeleted" header="Is Deleted" sortable style="min-width: 12rem">
-                    {data[field]}
-                </Column>
                 <template #expansion="slotProps">
                     <div class="p-3">
-                        <h5>Confirmed Goalies</h5>
+                        <h5>Goalies Requested</h5>
                         <DataTable :value="slotProps.data.goalies">
-                            <Column field="displayName" header="Goalie Name" sortable style="width: 12rem"></Column>
-                            <Column field="email" header="Goalie Email" sortable style="width: 12rem"></Column>
-                            <Column field="phone" header="Goalie Phone" sortable style="width: 12rem"></Column>
+                            <Column style="width: 5rem">
+                                <template #body="slotProps">
+                                    <button @click="confirmGoalie(slotProps.data)" class="p-button p-button-success">
+                                        Confirm
+                                    </button>
+                                </template>
+                            </Column>
+                            <Column field="displayName" header="Goalie Name" sortable style="width: 5rem"></Column>
+                            <Column field="email" header="Goalie Email" sortable style="width: 5rem"></Column>
+                            <Column field="phone" header="Goalie Phone" sortable style="width: 5rem"></Column>
                         </DataTable>
                     </div>
                 </template>

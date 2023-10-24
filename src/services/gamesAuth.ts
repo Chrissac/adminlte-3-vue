@@ -17,3 +17,11 @@ export const getAllGamesByDates = async (startDate:string, endDate:string) => {
         throw getError(error);
     }
 };
+export const getAllAvailableGames= async () => {
+    try {
+        const response = await ApiManager.get('Admin/GetAllAvailableGames');
+        return response;
+    } catch (error: any) {
+        throw getError(error);
+    }
+};
