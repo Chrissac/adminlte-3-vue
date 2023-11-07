@@ -83,9 +83,12 @@
                         <DataTable :value="slotProps.data.goalies">
                             <Column style="width: 5rem">
                                 <template #body="slotProps">
-                                    <button @click="confirmGoalie(slotProps.data)" class="p-button p-button-success">
+                                    <!-- <button @click="confirmGoalie(slotProps.data.goalies, slotProps.index)" class="p-button p-button-success">
+                                        Confirm Goalie
+                                    </button> -->
+                                    <button v-if="slotProps.data.goalies" @click="confirmGoalie(slotProps.data.goalies, slotProps.index)" class="p-button p-button-success">
                                         Confirm
-                                    </button>
+                                      </button>
                                 </template>
                             </Column>
                             <Column field="displayName" header="Goalie Name" sortable style="width: 5rem"></Column>
