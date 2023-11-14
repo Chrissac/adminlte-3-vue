@@ -4,6 +4,7 @@ import { defineComponent, ref, onMounted } from 'vue';
 import { IGames } from '@/interfaces/gamesList';
 import { getAllAvailableGames } from '@/services/gamesAuth';
 import { Goalies } from '@/interfaces/goalies';
+import { ColumnSlots } from 'primevue/column';
 
 export default {
   data() {
@@ -14,12 +15,13 @@ export default {
       filters: {
         global: { value: '', matchMode: 'contains' },
       },
+      selectedGoalie: Goalies, // Add a new data property to store the selected goalie
     };
   },
   methods: {
-    confirmGoalie(goalieData: Goalies, index : number) {
-      if (goalieData) {
-        const confirmationMessage = `Confirmed goalie: ${goalieData.displayName}`;
+    confirmGoalie(goalie : Goalies) {
+      if (goalie) {
+        const confirmationMessage = `Confirmed goalie: ${goalie.bookingId}`;
         console.log(confirmationMessage);
         this.$toast.add({ severity: 'success', summary: 'Confirmation', detail: confirmationMessage });
       } else {

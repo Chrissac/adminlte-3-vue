@@ -79,24 +79,24 @@
                 </Column>
                 <template #expansion="slotProps">
                     <div class="p-3">
-                        <h5>Goalies Requested</h5>
-                        <DataTable :value="slotProps.data.goalies">
-                            <Column style="width: 5rem">
-                                <template #body="slotProps">
-                                    <!-- <button @click="confirmGoalie(slotProps.data.goalies, slotProps.index)" class="p-button p-button-success">
-                                        Confirm Goalie
-                                    </button> -->
-                                    <button v-if="slotProps.data.goalies" @click="confirmGoalie(slotProps.data.goalies, slotProps.index)" class="p-button p-button-success">
-                                        Confirm
-                                      </button>
-                                </template>
-                            </Column>
-                            <Column field="displayName" header="Goalie Name" sortable style="width: 5rem"></Column>
-                            <Column field="email" header="Goalie Email" sortable style="width: 5rem"></Column>
-                            <Column field="phone" header="Goalie Phone" sortable style="width: 5rem"></Column>
-                        </DataTable>
+                      <h5>Goalies Requested</h5>
+                      <DataTable :value="slotProps.data.goalies">
+                        <template v-for="(goalie, index) in slotProps.data.goalies" :key="index">
+                          <Column field="displayName" header="Goalie Name" sortable style="width: 5rem">
+                            <template #body="slotProps">
+                              <button 
+                                @click="confirmGoalie(goalie)"
+                                class="p-button p-button-success"> Confirm Goalie
+                              </button>
+                            </template>
+                          </Column>
+                        </template>
+                        <Column field="displayName" header="Goalie Name" sortable style="width: 5rem"></Column>
+                        <Column field="email" header="Goalie Email" sortable style="width: 5rem"></Column>
+                        <Column field="phone" header="Goalie Phone" sortable style="width: 5rem"></Column>
+                      </DataTable>
                     </div>
-                </template>
+                  </template>
             </DataTable>
         </div>
     </div>

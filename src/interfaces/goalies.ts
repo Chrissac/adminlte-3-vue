@@ -1,4 +1,4 @@
-export interface Goalies {
+export class Goalies {
     bookingId: number;
     id: string;
     displayName: string;
