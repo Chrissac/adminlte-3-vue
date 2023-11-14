@@ -3,6 +3,7 @@ import { useField, useForm } from 'vee-validate';
 import { defineComponent, ref, onMounted } from 'vue';
 import { IGames } from '@/interfaces/gamesList';
 import { getAllAvailableGames } from '@/services/gamesAuth';
+import { confirmPlayerRequest } from '@/services/gamesAuth';
 import { Goalies } from '@/interfaces/goalies';
 import { ColumnSlots } from 'primevue/column';
 
@@ -19,10 +20,11 @@ export default {
     };
   },
   methods: {
-    confirmGoalie(goalie : Goalies) {
+    async confirmGoalie(goalie : Goalies) {
       if (goalie) {
-        const confirmationMessage = `Confirmed goalie: ${goalie.bookingId}`;
-        console.log(confirmationMessage);
+        // lets call the API
+        await confirmPlayerRequest(goalie.bookingId,goalie.id);
+        const confirmationMessage = `Goalie has been Confirmed!: ${goalie.displayName}`;
         this.$toast.add({ severity: 'success', summary: 'Confirmation', detail: confirmationMessage });
       } else {
         console.error('No goalie data available.');

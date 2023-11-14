@@ -25,3 +25,15 @@ export const getAllAvailableGames= async () => {
         throw getError(error);
     }
 };
+export const confirmPlayerRequest = async (bookingId:number, userId:string) => {
+    try {
+        const data = {
+            bookingId : bookingId,
+            userId : userId   
+          };
+        const response = await ApiManager.post('Player/ConfirmPlayerRequest', data);
+        return response;
+    } catch (error: any) {
+        throw getError(error);
+    }
+};
