@@ -12,6 +12,9 @@
 
 <!-- Main content -->
 <section class="content">
+    <div class="progress-spinner" v-if="loadingSpinner">
+        <ProgressSpinner />
+    </div>
     <!-- Default box -->
     <div class="container-fluid">
         <div class="card">

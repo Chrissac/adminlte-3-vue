@@ -13,6 +13,7 @@ export default {
       games: [] as IGames[],
       expandedRows: [] as Goalies[],
       loading: false,
+      loadingSpinner:false,
       filters: {
         global: { value: '', matchMode: 'contains' },
       },
@@ -23,9 +24,13 @@ export default {
     async confirmGoalie(goalie : Goalies) {
       if (goalie) {
         // lets call the API
+        //show loader first
+        this.loading = true;
         await confirmPlayerRequest(goalie.bookingId,goalie.id);
+        await this.fetchAvailableGames();
         const confirmationMessage = `Goalie has been Confirmed!: ${goalie.displayName}`;
         this.$toast.add({ severity: 'success', summary: 'Confirmation', detail: confirmationMessage });
+        this.loading = false;
       } else {
         console.error('No goalie data available.');
       }

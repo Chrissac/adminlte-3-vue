@@ -39,7 +39,7 @@ export const MENU = [
     {
         name: i18n.global.t('labels.games'),
         path: '/games',
-        icon: 'nav-icon fas fa-solid fa-lock'
+        icon: 'nav-icon fas fa-hockey-puck'
     },
     {
         name: i18n.global.t('labels.availableGames'),
