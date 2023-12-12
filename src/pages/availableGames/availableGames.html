@@ -80,12 +80,12 @@
                 <Column field="revenueAmount" header="Revenue Amount" sortable style="min-width: 12rem">
                     {data[field]}
                 </Column>
-                <template #expansion="slotProps">
+                <!-- <template #expansion="slotProps">
                     <div class="p-3">
                       <h5>Goalies Requested</h5>
                       <DataTable :value="slotProps.data.goalies">
                         <template v-for="(goalie, index) in slotProps.data.goalies" :key="index">
-                          <Column field="displayName" header="Goalie Name" sortable style="width: 5rem">
+                          <Column field="displayName" header="Confirm Now" sortable style="width: 5rem">
                             <template #body="slotProps">
                               <button 
                                 @click="confirmGoalie(goalie)"
@@ -97,6 +97,27 @@
                         <Column field="displayName" header="Goalie Name" sortable style="width: 5rem"></Column>
                         <Column field="email" header="Goalie Email" sortable style="width: 5rem"></Column>
                         <Column field="phone" header="Goalie Phone" sortable style="width: 5rem"></Column>
+                      </DataTable>
+                    </div>
+                  </template> -->
+                  <template #expansion="slotProps">
+                    <div class="p-3">
+                      <h5>Goalies Requested</h5>
+                      <DataTable :value="slotProps.data.goalies">
+                        <template v-for="(goalie, index) in slotProps.data.goalies" :key="index">
+                          <Column field="displayName" header="Confirm Now" sortable style="width: 5rem">
+                            <template #body="slotProps">
+                              <button 
+                                v-if="index === 0" 
+                                @click="confirmGoalie(goalie)"
+                                class="p-button p-button-success"> Confirm Goalie
+                              </button>
+                            </template>
+                          </Column>
+                          <Column field="displayName" header="Goalie Name" sortable style="width: 5rem"></Column>
+                          <Column field="email" header="Goalie Email" sortable style="width: 5rem"></Column>
+                          <Column field="phone" header="Goalie Phone" sortable style="width: 5rem"></Column>
+                        </template>
                       </DataTable>
                     </div>
                   </template>
