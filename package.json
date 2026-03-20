@@ -28,7 +28,6 @@
         "datatables.net-select": "^1.6.2",
         "datatables.net-select-bs5": "^1.6.1",
         "datatables.net-vue3": "^2.1.0",
-        "gatekeeper-client-sdk": "0.4.2",
         "jl-datatable": "^1.1.1",
         "luxon": "3.0.3",
         "primeicons": "^6.0.1",
@@ -71,12 +70,11 @@
         "eslint-plugin-prettier": "4.2.1",
         "eslint-plugin-vue": "9.4.0",
         "node-polyfill-webpack-plugin": "2.0.1",
-        "node-sass": "7.0.3",
         "prettier": "2.7.1",
+        "sass": "^1.98.0",
         "sass-loader": "13.0.2",
         "ts-node": "^10.9.1",
         "tsconfig-paths": "^3.14.2",
-        "typescript": "~4.8.3",
-        "vue-jest": "3.0.7"
+        "typescript": "~4.8.3"
     }
 }

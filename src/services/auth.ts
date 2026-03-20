@@ -1,6 +1,36 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import {Gatekeeper} from 'gatekeeper-client-sdk';
 import {ApiManager} from './ApiManager';
+
+const getNotImplementedError = (methodName: string) => {
+    return new Error(
+        `${methodName} is not configured for this project build.`
+    );
+};
+
+const Gatekeeper = {
+    async registerByAuth(email: string, password: string) {
+        const data = {
+            Email: email,
+            Password: password
+        };
+        return ApiManager.post('Admin/CreateUserAdminAccount', data);
+    },
+    async loginByGoogle() {
+        throw getNotImplementedError('Google login');
+    },
+    async registerByGoogle() {
+        throw getNotImplementedError('Google registration');
+    },
+    async loginByFacebook() {
+        throw getNotImplementedError('Facebook login');
+    },
+    async registerByFacebook() {
+        throw getNotImplementedError('Facebook registration');
+    },
+    async getProfile() {
+        return ApiManager.get('Admin/GetProfile');
+    }
+};
 const getError = (error: any) => {
     const message = error.message || 'Failed';
     return new Error(message);

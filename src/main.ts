@@ -105,6 +105,10 @@ import {VueWindowSizePlugin} from 'vue-window-size/option-api';
 
 import {ProfabricComponents} from '@profabric/vue-components';
 import './index.scss';
+import 'admin-lte/plugins/fontawesome-free/css/all.min.css';
+import 'admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css';
+import 'admin-lte/dist/css/adminlte.min.css';
+import 'vue-toastification/dist/index.css';
 import 'primevue/resources/themes/lara-light-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
