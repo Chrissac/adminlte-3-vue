@@ -54,7 +54,7 @@ export const MENU = [
     {
         name: i18n.global.t('labels.teams'),
         path: '/teams',
-        icon: 'nav-icon fas fa-people-group'
+        icon: 'nav-icon fas fa-tshirt'
     },
     // {
     //     name: i18n.global.t('labels.games'),
