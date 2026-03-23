@@ -13,3 +13,44 @@
     outline: none;
     cursor: pointer;
 }
+
+/* Global compact density for PrimeVue data grids */
+.p-datatable .p-datatable-thead > tr > th {
+    padding: 0.45rem 0.55rem;
+    font-size: 0.84rem;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.4rem 0.55rem;
+    font-size: 0.84rem;
+    line-height: 1.2;
+}
+
+.p-datatable .p-column-header-content {
+    gap: 0.3rem;
+}
+
+.p-datatable .p-button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.78rem;
+}
+
+.p-paginator {
+    padding: 0.35rem 0.45rem;
+}
+
+.p-paginator .p-paginator-page,
+.p-paginator .p-paginator-next,
+.p-paginator .p-paginator-prev,
+.p-paginator .p-paginator-first,
+.p-paginator .p-paginator-last,
+.p-paginator .p-dropdown {
+    min-width: 1.9rem;
+    height: 1.9rem;
+    font-size: 0.8rem;
+}
+
+.p-tag {
+    font-size: 0.72rem;
+    padding: 0.2rem 0.42rem;
+}
