@@ -3,6 +3,8 @@ export interface ITeamMemberAttendance {
     fullName: string;
     email: string;
     phone: string;
+    squareCustomerId: string;
+    lastTransactionApiId: string;
     isAdmin: boolean;
     isCaptain: boolean;
     line: string;

@@ -85,7 +85,7 @@ export const getTeamRosterMembers = async (
 };
 
 const mapAdminTeamRow = (row: any, games: ITeamGame[]): ITeam => {
-    const nextGameDate = row?.NextGameDate || '';
+    const nextGameDate = normalizeDateOnly(row?.NextGameDate);
     const nextOpponent = row?.NextOpponent || '';
     const nextLocation = row?.NextLocation || '';
 
@@ -132,6 +132,8 @@ const mapAdminTeamRosterRow = (row: any): ITeamMemberAttendance => {
             ).trim()}`.trim(),
         email: String(row?.Email || ''),
         phone: String(row?.Phone || ''),
+        squareCustomerId: String(row?.SquareCustomerId || ''),
+        lastTransactionApiId: '',
         isAdmin: Boolean(row?.IsAdmin),
         isCaptain: Boolean(row?.IsCaptain),
         line: String(row?.Line || ''),
@@ -162,6 +164,8 @@ const mapAdminTeamSchedulePaymentRow = (
             ).trim()}`.trim(),
         email: String(row?.Email || ''),
         phone: String(row?.Phone || ''),
+        squareCustomerId: String(row?.SquareCustomerId || rosterRow?.SquareCustomerId || ''),
+        lastTransactionApiId: String(row?.LatestTransactionApiId || ''),
         isAdmin: Boolean(rosterRow?.IsAdmin),
         isCaptain: Boolean(rosterRow?.IsCaptain),
         line: String(row?.Line || rosterRow?.Line || ''),
@@ -228,6 +232,14 @@ const groupSchedulesByTeam = (rows: any[]): Map<number, ITeamGame[]> => {
         grouped.get(teamId)?.push(mapAdminTeamScheduleRow(row));
     }
 
+    grouped.forEach((games: ITeamGame[]) => {
+        games.sort((a: ITeamGame, b: ITeamGame) => {
+            const aTime = Date.parse(a.gameDate || '');
+            const bTime = Date.parse(b.gameDate || '');
+            return bTime - aTime;
+        });
+    });
+
     return grouped;
 };
 
@@ -238,8 +250,8 @@ const mapAdminTeamScheduleRow = (row: any): ITeamGame => {
     return {
         gameId: Number(row?.TeamScheduleId || 0),
         opponentName: String(row?.OpposingTeamName || ''),
-        gameDate: String(row?.GameStartDate || ''),
-        startTime: String(row?.GameStartTime || ''),
+        gameDate: normalizeDateOnly(row?.GameStartDate),
+        startTime: formatTime12Hour(row?.GameStartTime),
         gameType: String(row?.GameType || ''),
         costPerPlayer: Number(row?.CostPerPlayer || 0),
         spotsAvailable: Number(row?.SpotsAvailable || 0),
@@ -257,4 +269,49 @@ const mapAdminTeamScheduleRow = (row: any): ITeamGame => {
         status: isDeleted ? 'Cancelled' : isCompleted ? 'Completed' : 'Scheduled',
         members: []
     };
+};
+
+const normalizeDateOnly = (value: any): string => {
+    if (!value) {
+        return '';
+    }
+    const raw = String(value);
+    if (raw.includes('T')) {
+        return raw.split('T')[0];
+    }
+    const parsed = new Date(raw);
+    if (!Number.isNaN(parsed.getTime())) {
+        return parsed.toISOString().split('T')[0];
+    }
+    return raw;
+};
+
+const formatTime12Hour = (value: any): string => {
+    if (!value) {
+        return '';
+    }
+
+    const raw = String(value).trim();
+    const match = raw.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+    if (match) {
+        const hour24 = Number(match[1]);
+        const minute = match[2];
+        if (Number.isNaN(hour24) || hour24 < 0 || hour24 > 23) {
+            return raw;
+        }
+        const suffix = hour24 >= 12 ? 'PM' : 'AM';
+        const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
+        return `${hour12}:${minute} ${suffix}`;
+    }
+
+    const parsed = new Date(raw);
+    if (!Number.isNaN(parsed.getTime())) {
+        const hours = parsed.getHours();
+        const minutes = String(parsed.getMinutes()).padStart(2, '0');
+        const suffix = hours >= 12 ? 'PM' : 'AM';
+        const hour12 = hours % 12 === 0 ? 12 : hours % 12;
+        return `${hour12}:${minutes} ${suffix}`;
+    }
+
+    return raw;
 };
