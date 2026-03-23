@@ -22,7 +22,15 @@
                     :loading="loading"
                     :rowsPerPageOptions="[5, 10, 20, 50]"
                     :rows="10"
-                    :globalFilterFields="['teamName', 'division', 'season', 'location', 'contactName', 'contactEmail']"
+                    :globalFilterFields="[
+                        'teamName',
+                        'division',
+                        'teamType',
+                        'location',
+                        'ownerDisplayName',
+                        'ownerEmail',
+                        'nextOpponent'
+                    ]"
                     dataKey="teamId"
                     showGridlines
                     scrollable
@@ -53,24 +61,54 @@
                     <Column expander style="width: 5rem" />
                     <Column field="teamName" header="Team" sortable style="min-width: 14rem" />
                     <Column field="division" header="Division" sortable style="min-width: 8rem" />
-                    <Column field="season" header="Season" sortable style="min-width: 10rem" />
-                    <Column field="location" header="Home Location" sortable style="min-width: 12rem" />
-                    <Column field="contactName" header="Contact" sortable style="min-width: 12rem" />
-                    <Column field="contactEmail" header="Contact Email" sortable style="min-width: 14rem" />
-                    <Column header="Games" style="min-width: 7rem">
+                    <Column field="teamType" header="Type" sortable style="min-width: 9rem" />
+                    <Column field="location" header="Location" sortable style="min-width: 11rem" />
+                    <Column field="ownerDisplayName" header="Owner" sortable style="min-width: 12rem" />
+                    <Column field="ownerEmail" header="Owner Email" sortable style="min-width: 14rem" />
+                    <Column field="totalMembers" header="Members" sortable style="min-width: 8rem" />
+                    <Column field="activeSchedules" header="Active Games" sortable style="min-width: 9rem" />
+                    <Column header="Roster" style="min-width: 10rem">
                         <template #body="slotProps">
-                            {{ slotProps.data.games.length }}
+                            <PrimeButton
+                                label="View Members"
+                                icon="pi pi-users"
+                                size="small"
+                                @click="openTeamMembersDialog(slotProps.data)"
+                            />
+                        </template>
+                    </Column>
+                    <Column header="Next Game" style="min-width: 14rem">
+                        <template #body="slotProps">
+                            <span v-if="slotProps.data.nextGameDate">
+                                {{ slotProps.data.nextGameDate }} vs {{ slotProps.data.nextOpponent }}
+                            </span>
+                            <span v-else>No upcoming game</span>
                         </template>
                     </Column>
 
                     <template #expansion="slotProps">
                         <div class="p-3">
-                            <h5 class="mb-3">Games for {{ slotProps.data.teamName }}</h5>
+                            <h5 class="mb-3">Schedule Snapshot for {{ slotProps.data.teamName }}</h5>
                             <DataTable :value="slotProps.data.games" tableClass="p-datatable-sm" showGridlines>
                                 <Column field="gameDate" header="Game Date" style="min-width: 10rem" />
                                 <Column field="startTime" header="Start Time" style="min-width: 8rem" />
                                 <Column field="opponentName" header="Opponent" style="min-width: 12rem" />
+                                <Column field="gameType" header="Type" style="min-width: 8rem" />
                                 <Column field="venue" header="Venue" style="min-width: 12rem" />
+                                <Column field="spotsAvailable" header="Spots" style="min-width: 6rem" />
+                                <Column field="openSpots" header="Open" style="min-width: 6rem" />
+                                <Column field="goingCount" header="Going" style="min-width: 6rem" />
+                                <Column field="notGoingCount" header="Not Going" style="min-width: 8rem" />
+                                <Column field="maybeCount" header="Maybe" style="min-width: 6rem" />
+                                <Column field="noResponseCount" header="No Response" style="min-width: 9rem" />
+                                <Column field="paidViaAppCount" header="Paid In App" style="min-width: 8rem" />
+                                <Column field="paidOutsideAppCount" header="Paid Outside" style="min-width: 8rem" />
+                                <Column field="unpaidGoingCount" header="Unpaid" style="min-width: 7rem" />
+                                <Column header="Collected" style="min-width: 8rem">
+                                    <template #body="gameSlot">
+                                        ${{ Number(gameSlot.data.totalCollectedAppAmount || 0).toFixed(2) }}
+                                    </template>
+                                </Column>
                                 <Column header="Status" style="min-width: 10rem">
                                     <template #body="gameSlot">
                                         <Tag
@@ -82,14 +120,15 @@
                                 <Column header="Members" style="min-width: 10rem">
                                     <template #body="gameSlot">
                                         <PrimeButton
-                                            label="View Members"
-                                            icon="pi pi-users"
+                                            label="Attendance + Payment"
+                                            icon="pi pi-wallet"
                                             size="small"
                                             @click="openMembersDialog(slotProps.data, gameSlot.data)"
                                         />
                                     </template>
                                 </Column>
                             </DataTable>
+                            <small class="text-muted d-block mt-2">Roster data is live from `vAdminTeamRoster`.</small>
                         </div>
                     </template>
                 </DataTable>
@@ -101,18 +140,49 @@
         v-model:visible="membersDialogVisible"
         modal
         :style="{ width: '85vw' }"
-        header="Team Members Attendance"
+        :header="
+            membersDialogMode === 'team'
+                ? 'Team Roster'
+                : 'Game Attendance and Payment'
+        "
         :draggable="false"
     >
         <div class="mb-3">
             <strong>Team:</strong> {{ selectedTeamName }}<br />
-            <strong>Game:</strong> {{ selectedGameLabel }}
+            <template v-if="membersDialogMode === 'game'">
+                <strong>Game:</strong> {{ selectedGameLabel }}
+            </template>
         </div>
         <DataTable :value="selectedGameMembers" showGridlines tableClass="p-datatable-sm" :rows="10" paginator>
             <Column field="fullName" header="Member" sortable style="min-width: 12rem" />
             <Column field="email" header="Email" sortable style="min-width: 14rem" />
             <Column field="phone" header="Phone" style="min-width: 10rem" />
-            <Column header="Going" style="min-width: 9rem">
+            <Column header="Role" style="min-width: 11rem">
+                <template #body="memberSlot">
+                    <Tag v-if="memberSlot.data.isCaptain" value="Captain" severity="success" />
+                    <Tag v-else-if="memberSlot.data.isAdmin" value="Admin" severity="info" />
+                    <Tag v-else value="Player" severity="secondary" />
+                </template>
+            </Column>
+            <Column field="position" header="Position" style="min-width: 8rem" />
+            <Column field="line" header="Line" style="min-width: 6rem" />
+            <Column header="Roster Active" style="min-width: 9rem">
+                <template #body="memberSlot">
+                    <Tag
+                        :value="memberSlot.data.isRosterActive ? 'Yes' : 'No'"
+                        :severity="memberSlot.data.isRosterActive ? 'success' : 'danger'"
+                    />
+                </template>
+            </Column>
+            <Column header="User Active" style="min-width: 9rem">
+                <template #body="memberSlot">
+                    <Tag
+                        :value="memberSlot.data.isUserActive ? 'Yes' : 'No'"
+                        :severity="memberSlot.data.isUserActive ? 'success' : 'danger'"
+                    />
+                </template>
+            </Column>
+            <Column v-if="membersDialogMode === 'game'" header="Going" style="min-width: 9rem">
                 <template #body="memberSlot">
                     <Tag
                         :value="memberSlot.data.goingStatus"
@@ -120,7 +190,7 @@
                     />
                 </template>
             </Column>
-            <Column header="Payment" style="min-width: 12rem">
+            <Column v-if="membersDialogMode === 'game'" header="Payment" style="min-width: 12rem">
                 <template #body="memberSlot">
                     <Tag
                         :value="memberSlot.data.paymentStatus"
@@ -128,11 +198,17 @@
                     />
                 </template>
             </Column>
-            <Column field="paymentAmount" header="Amount" style="min-width: 8rem">
+            <Column v-if="membersDialogMode === 'game'" field="paymentAmount" header="Amount" style="min-width: 8rem">
                 <template #body="memberSlot">
                     ${{ Number(memberSlot.data.paymentAmount || 0).toFixed(2) }}
                 </template>
             </Column>
         </DataTable>
+        <small v-if="membersDialogMode === 'game'" class="text-muted d-block mt-2">
+            Attendance and payment values are live from `vAdminTeamScheduleMemberPaymentStatus`.
+        </small>
+        <small v-else class="text-muted d-block mt-2">
+            Team roster values are live from `vAdminTeamRoster`.
+        </small>
     </PrimeDialog>
 </section>

@@ -1,6 +1,6 @@
 import {defineComponent} from 'vue';
 import {ITeam, ITeamGame, ITeamMemberAttendance} from '@/interfaces/team';
-import {getAllTeams, getTeamGameMembers} from '@/services/teamsAuth';
+import {getAllTeams, getTeamGameMembers, getTeamRosterMembers} from '@/services/teamsAuth';
 
 export default defineComponent({
     data() {
@@ -14,7 +14,8 @@ export default defineComponent({
             membersDialogVisible: false,
             selectedTeamName: '',
             selectedGameLabel: '',
-            selectedGameMembers: [] as ITeamMemberAttendance[]
+            selectedGameMembers: [] as ITeamMemberAttendance[],
+            membersDialogMode: 'team' as 'team' | 'game'
         };
     },
     async mounted() {
@@ -32,6 +33,15 @@ export default defineComponent({
             this.selectedTeamName = team.teamName;
             this.selectedGameLabel = `${game.gameDate} vs ${game.opponentName}`;
             this.selectedGameMembers = response.data || [];
+            this.membersDialogMode = 'game';
+            this.membersDialogVisible = true;
+        },
+        async openTeamMembersDialog(team: ITeam) {
+            const response = await getTeamRosterMembers(team.teamId);
+            this.selectedTeamName = team.teamName;
+            this.selectedGameLabel = '';
+            this.selectedGameMembers = response.data || [];
+            this.membersDialogMode = 'team';
             this.membersDialogVisible = true;
         },
         getGameStatusSeverity(status: string) {
@@ -52,6 +62,10 @@ export default defineComponent({
                     return 'success';
                 case 'Not Going':
                     return 'danger';
+                case 'Maybe':
+                    return 'warning';
+                case 'No Response':
+                    return 'secondary';
                 default:
                     return 'warning';
             }
@@ -62,6 +76,10 @@ export default defineComponent({
                     return 'success';
                 case 'Handled Offline':
                     return 'info';
+                case 'Refunded':
+                    return 'danger';
+                case 'N/A':
+                    return 'secondary';
                 default:
                     return 'warning';
             }
