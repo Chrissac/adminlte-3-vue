@@ -1,0 +1,138 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Teams</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Team Directory</h3>
+            </div>
+            <div class="card-body">
+                <DataTable
+                    :value="teams"
+                    v-model:filters="filters"
+                    filterDisplay="row"
+                    :loading="loading"
+                    :rowsPerPageOptions="[5, 10, 20, 50]"
+                    :rows="10"
+                    :globalFilterFields="['teamName', 'division', 'season', 'location', 'contactName', 'contactEmail']"
+                    dataKey="teamId"
+                    showGridlines
+                    scrollable
+                    scrollHeight="650px"
+                    paginator
+                    resizableColumns
+                    stripedRows
+                    columnResizeMode="fit"
+                    ref="dt"
+                    tableClass="p-datatable-sm"
+                    v-model:expandedRows="expandedRows"
+                >
+                    <template #header>
+                        <div class="flex justify-content-end">
+                            <PrimeButton
+                                icon="pi pi-external-link"
+                                label="Export"
+                                @click="exportCSV($event)"
+                                style="margin-right: 1rem;"
+                            />
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search" />
+                                <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+                            </span>
+                        </div>
+                    </template>
+
+                    <Column expander style="width: 5rem" />
+                    <Column field="teamName" header="Team" sortable style="min-width: 14rem" />
+                    <Column field="division" header="Division" sortable style="min-width: 8rem" />
+                    <Column field="season" header="Season" sortable style="min-width: 10rem" />
+                    <Column field="location" header="Home Location" sortable style="min-width: 12rem" />
+                    <Column field="contactName" header="Contact" sortable style="min-width: 12rem" />
+                    <Column field="contactEmail" header="Contact Email" sortable style="min-width: 14rem" />
+                    <Column header="Games" style="min-width: 7rem">
+                        <template #body="slotProps">
+                            {{ slotProps.data.games.length }}
+                        </template>
+                    </Column>
+
+                    <template #expansion="slotProps">
+                        <div class="p-3">
+                            <h5 class="mb-3">Games for {{ slotProps.data.teamName }}</h5>
+                            <DataTable :value="slotProps.data.games" tableClass="p-datatable-sm" showGridlines>
+                                <Column field="gameDate" header="Game Date" style="min-width: 10rem" />
+                                <Column field="startTime" header="Start Time" style="min-width: 8rem" />
+                                <Column field="opponentName" header="Opponent" style="min-width: 12rem" />
+                                <Column field="venue" header="Venue" style="min-width: 12rem" />
+                                <Column header="Status" style="min-width: 10rem">
+                                    <template #body="gameSlot">
+                                        <Tag
+                                            :value="gameSlot.data.status"
+                                            :severity="getGameStatusSeverity(gameSlot.data.status)"
+                                        />
+                                    </template>
+                                </Column>
+                                <Column header="Members" style="min-width: 10rem">
+                                    <template #body="gameSlot">
+                                        <PrimeButton
+                                            label="View Members"
+                                            icon="pi pi-users"
+                                            size="small"
+                                            @click="openMembersDialog(slotProps.data, gameSlot.data)"
+                                        />
+                                    </template>
+                                </Column>
+                            </DataTable>
+                        </div>
+                    </template>
+                </DataTable>
+            </div>
+        </div>
+    </div>
+
+    <PrimeDialog
+        v-model:visible="membersDialogVisible"
+        modal
+        :style="{ width: '85vw' }"
+        header="Team Members Attendance"
+        :draggable="false"
+    >
+        <div class="mb-3">
+            <strong>Team:</strong> {{ selectedTeamName }}<br />
+            <strong>Game:</strong> {{ selectedGameLabel }}
+        </div>
+        <DataTable :value="selectedGameMembers" showGridlines tableClass="p-datatable-sm" :rows="10" paginator>
+            <Column field="fullName" header="Member" sortable style="min-width: 12rem" />
+            <Column field="email" header="Email" sortable style="min-width: 14rem" />
+            <Column field="phone" header="Phone" style="min-width: 10rem" />
+            <Column header="Going" style="min-width: 9rem">
+                <template #body="memberSlot">
+                    <Tag
+                        :value="memberSlot.data.goingStatus"
+                        :severity="getGoingSeverity(memberSlot.data.goingStatus)"
+                    />
+                </template>
+            </Column>
+            <Column header="Payment" style="min-width: 12rem">
+                <template #body="memberSlot">
+                    <Tag
+                        :value="memberSlot.data.paymentStatus"
+                        :severity="getPaymentSeverity(memberSlot.data.paymentStatus)"
+                    />
+                </template>
+            </Column>
+            <Column field="paymentAmount" header="Amount" style="min-width: 8rem">
+                <template #body="memberSlot">
+                    ${{ Number(memberSlot.data.paymentAmount || 0).toFixed(2) }}
+                </template>
+            </Column>
+        </DataTable>
+    </PrimeDialog>
+</section>

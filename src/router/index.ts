@@ -15,6 +15,7 @@ import SubMenu from '@/pages/main-menu/sub-menu/sub-menu.vue';
 import Blank from '@/pages/blank/blank.vue';
 import Games from '@/pages/games/games.vue';
 import Users from '@/pages/users/users.vue';
+import Teams from '@/pages/teams/teams.vue';
 import actions from '@/store/auth/actions';
 const routes: Array<RouteRecordRaw> = [
     {
@@ -37,6 +38,14 @@ const routes: Array<RouteRecordRaw> = [
                 path: 'users',
                 name: 'users',
                 component: Users,
+                meta: {
+                    requiresAuth: true
+                }
+            },
+            {
+                path: 'teams',
+                name: 'Teams',
+                component: Teams,
                 meta: {
                     requiresAuth: true
                 }
